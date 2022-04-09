@@ -1,4 +1,4 @@
 # backend-booking-movies-tickets
-Sử dụng backend: SpringBoot
+Backend : SpringBoot
 
 Database: MySQL
