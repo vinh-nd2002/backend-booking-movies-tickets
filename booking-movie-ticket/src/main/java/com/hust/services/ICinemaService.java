@@ -3,10 +3,10 @@ package com.hust.services;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.hust.entity.User;
+import com.hust.entity.Cinema;
 
-public interface IUserService {
+public interface ICinemaService {
 
-	Page<User> getAllUsers(Pageable pageable);
+	Page<Cinema> getAllCinemas(Pageable pageable);
 
 }

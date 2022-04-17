@@ -1,5 +1,7 @@
 package com.hust.controller;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,29 +14,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hust.dto.UserDTO;
-import com.hust.entity.User;
-import com.hust.services.IUserService;
-
-import java.util.List;
+import com.hust.dto.CinemaDTO;
+import com.hust.entity.Cinema;
+import com.hust.services.ICinemaService;
 
 @RestController
-@RequestMapping(value = "api/v1/users")
-//@CrossOrigin("http://127.0.0.1:5500")
-public class UserController {
+@RequestMapping(value = "api/v1/cinemas")
+public class CinemaController {
+
 	@Autowired
-	private IUserService iUserService;
+	private ICinemaService iCinemaService;
+
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@GetMapping()
-	public ResponseEntity<?> getAllUsers(Pageable pageable) {
-		Page<User> users = iUserService.getAllUsers(pageable);
+	@GetMapping
+	public ResponseEntity<?> getAllCinemas(Pageable pageable) {
+		Page<Cinema> cinemas = iCinemaService.getAllCinemas(pageable);
 
-		List<UserDTO> dtos = modelMapper.map(users.getContent(), new TypeToken<List<UserDTO>>() {
+		List<CinemaDTO> dtos = modelMapper.map(cinemas.getContent(), new TypeToken<List<CinemaDTO>>() {
 		}.getType());
 
-		Page<UserDTO> dtoPages = new PageImpl<>(dtos, pageable, users.getTotalElements());
+		Page<CinemaDTO> dtoPages = new PageImpl<>(dtos, pageable, cinemas.getTotalElements());
 		return new ResponseEntity<>(dtoPages, HttpStatus.OK);
 	}
 }
