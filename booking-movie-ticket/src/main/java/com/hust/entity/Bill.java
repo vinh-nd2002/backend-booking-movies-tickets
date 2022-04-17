@@ -1,4 +1,4 @@
-package com.hust.models;
+package com.hust.entity;
 
 import java.util.Date;
 

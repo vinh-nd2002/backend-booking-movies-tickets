@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hust.entity.User;
 import com.hust.services.IUserService;
 
 import java.util.List;
-
-import com.hust.models.User;
 
 @RestController
 @RequestMapping(value = "api/v1/users")

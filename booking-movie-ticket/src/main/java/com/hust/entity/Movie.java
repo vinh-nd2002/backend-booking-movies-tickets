@@ -1,4 +1,4 @@
-package com.hust.models;
+package com.hust.entity;
 
 import java.util.Date;
 import java.util.List;
@@ -19,7 +19,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "`Movies`", catalog = "booking_movie_ticket")
+@Table(name = "`Movie`", catalog = "booking_movie_ticket")
 @Data
 @NoArgsConstructor
 public class Movie {

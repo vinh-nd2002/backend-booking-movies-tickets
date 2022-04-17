@@ -2,7 +2,7 @@ package com.hust.services;
 
 import java.util.List;
 
-import com.hust.models.User;
+import com.hust.entity.User;
 
 public interface IUserService {
 

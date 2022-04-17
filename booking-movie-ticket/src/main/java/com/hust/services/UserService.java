@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hust.models.User;
+import com.hust.entity.User;
 import com.hust.repository.IUserRepository;
 
 @Service
