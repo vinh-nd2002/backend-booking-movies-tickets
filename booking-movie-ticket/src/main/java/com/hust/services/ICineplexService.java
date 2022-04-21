@@ -8,4 +8,6 @@ public interface ICineplexService {
 
 	List<Cineplex> getAllCineplexs();
 
+	Cineplex getCineplexById(short id);
+
 }

@@ -43,9 +43,8 @@ public class Schedule {
 	@Column(name = "schedule_start", nullable = false, updatable = false)
 	@Temporal(TemporalType.TIME)
 	private Date scheduleStart;
-	
+
 	@OneToMany(mappedBy = "ticketOfSchedule")
 	private List<Ticket> tickets;
-	
 
 }

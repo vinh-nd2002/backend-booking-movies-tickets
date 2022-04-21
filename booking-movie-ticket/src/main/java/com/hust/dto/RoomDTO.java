@@ -10,26 +10,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class MovieDTO extends RepresentationModel<MovieDTO> {
-	private int movieId;
-	
-	private String movieName;
+public class RoomDTO {
+	private int roomId;
 
-	private String movieDescription;
-
-	private String movieTrailer;
-
-	private Date movieRelease;
-
-	private short movieLenght;
-
-	private String moviePoster;
-
-	private short evaluate;
-
-	private boolean status;
-
-	private int moviePrice;
+	private String roomName;
 
 	private List<ScheduleDTO> schedules;
 
@@ -42,6 +26,20 @@ public class MovieDTO extends RepresentationModel<MovieDTO> {
 
 		private Date scheduleStart;
 
-	}
+		private MovieDTO scheduleOfMovie;
 
+		@Data
+		@NoArgsConstructor
+		static class MovieDTO extends RepresentationModel<MovieDTO> {
+			private int movieId;
+
+			private Date movieRelease;
+
+			private String movieName;
+
+			private String moviePoster;
+
+			private boolean status;
+		}
+	}
 }

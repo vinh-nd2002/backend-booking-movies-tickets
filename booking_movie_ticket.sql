@@ -260,7 +260,8 @@ CREATE TABLE IF NOT EXISTS `Movie` (
   `movie_lenght` 		TINYINT UNSIGNED DEFAULT NULL,
   `movie_poster` 		TEXT DEFAULT NULL,
   `evaluate` 			TINYINT UNSIGNED DEFAULT 6,
-  `status` 				BOOLEAN DEFAULT 0
+  `status` 				BOOLEAN DEFAULT 0,
+  `movie_price` 		INT UNSIGNED DEFAULT 60000
 ) ;
  
 INSERT INTO `Movie` (`movie_name`,`movie_trailer`,`movie_release`,`movie_lenght`,`movie_poster`,`evaluate`,`status`, `movie_description`) VALUES
@@ -339,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `Bill` (
 
 SELECT * FROM Movie;
 SELECT * FROM Room;
-SELECT * FROM Schedule;
+SELECT * FROM `Schedule`;
 SELECT * FROM `User`;
 SELECT * FROM Seat;
 SELECT * FROM Schedule;

@@ -9,4 +9,6 @@ public interface ICinemaService {
 
 	Page<Cinema> getAllCinemas(Pageable pageable);
 
+	Cinema getCinemaById(int id);
+
 }

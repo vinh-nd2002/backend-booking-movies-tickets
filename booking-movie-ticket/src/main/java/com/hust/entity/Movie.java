@@ -52,11 +52,18 @@ public class Movie {
 	@ColumnDefault("6")
 	private short evaluate;
 
+	@Column(name = "movie_price")
+	@ColumnDefault("60000")
+	private int moviePrice;
+
 	@Column(name = "status")
 	@ColumnDefault("0")
 	private boolean status;
-	
+
 	@OneToMany(mappedBy = "ticketOfMovie")
 	private List<Ticket> tickets;
+
+	@OneToMany(mappedBy = "scheduleOfMovie")
+	private List<Schedule> schedules;
 
 }

@@ -18,4 +18,9 @@ public class CineplexService implements ICineplexService{
 		return cineplexRepository.findAll();
 	}
 
+	@Override
+	public Cineplex getCineplexById(short id) {
+		return cineplexRepository.getById(id);
+	}
+
 }

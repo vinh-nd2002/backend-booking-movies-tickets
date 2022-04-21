@@ -9,13 +9,18 @@ import com.hust.entity.Cinema;
 import com.hust.repository.ICinemaRepository;
 
 @Service
-public class CinemaService implements ICinemaService{
-	
+public class CinemaService implements ICinemaService {
+
 	@Autowired
 	private ICinemaRepository cinemaRepository;
 
 	@Override
 	public Page<Cinema> getAllCinemas(Pageable pageable) {
 		return cinemaRepository.findAll(pageable);
+	}
+
+	@Override
+	public Cinema getCinemaById(int id) {
+		return cinemaRepository.getById(id);
 	}
 }
