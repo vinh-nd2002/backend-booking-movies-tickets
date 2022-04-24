@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -30,9 +31,9 @@ public class Cineplex {
 	@Column(name = "cineplex_name", length = 50, unique = true, nullable = false)
 	private String cineplexName;
 
-	@Column(name = "logo", nullable = false)
-	private String cineplexLogo;
-
-	@OneToMany(mappedBy = "cineplex")
+	@OneToMany(mappedBy = "cinemasOfCineplex")
 	private List<Cinema> cinemas;
+
+	@OneToOne(mappedBy = "imgOfCineplex")
+	private Image cineplexLogo;
 }

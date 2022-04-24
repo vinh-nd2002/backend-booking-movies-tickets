@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,14 +23,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "`User`", catalog = "booking_movie_ticket")
+@Table(name = "`Account`", catalog = "booking_movie_ticket")
 @Data
 @NoArgsConstructor
-public class User {
-	@Column(name = "user_id")
+public class Account {
+	@Column(name = "account_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userId;
+	private int accountId;
 
 	@Column(name = "username", length = 50, unique = true, updatable = false, nullable = false)
 	private String username;
@@ -43,10 +44,10 @@ public class User {
 	@Column(name = "password", length = 800, nullable = false)
 	private String password;
 
-	@Column(name = "firstName", length = 30, nullable = false)
+	@Column(name = "first_name", length = 30, nullable = false)
 	private String firstName;
 
-	@Column(name = "lastName", length = 30, nullable = false)
+	@Column(name = "last_name", length = 30, nullable = false)
 	private String lastName;
 
 	@Column(name = "date_of_birth", nullable = false)
@@ -60,10 +61,6 @@ public class User {
 	@Column(name = "address", length = 100, nullable = false)
 	private String address;
 
-	@Column(name = "avatarUrl")
-	@ColumnDefault("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png")
-	private String avatarUrl;
-
 	@Column(name = "role", nullable = false)
 	@ColumnDefault("Customer")
 	@Enumerated(EnumType.STRING)
@@ -74,15 +71,18 @@ public class User {
 	@CreationTimestamp
 	private Date createdDate;
 	
-	@OneToMany(mappedBy = "billOfUser")
+	@OneToMany(mappedBy = "billsOfAccount")
 	private List<Bill> bills;
 
+	@OneToOne(mappedBy = "imgOfAccount")
+	private Image avatar;
+	
 	public enum GenderType {
 		MALE, FEMALE
 	}
 
 	public enum Role {
-		Customer, Manager
+		CUSTOMER, ADMIN
 	}
 
 }

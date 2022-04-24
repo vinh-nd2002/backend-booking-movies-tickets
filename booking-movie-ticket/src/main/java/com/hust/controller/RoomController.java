@@ -5,9 +5,6 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,13 +25,11 @@ public class RoomController {
 	private ModelMapper modelMapper;
 
 	@GetMapping
-	public ResponseEntity<?> getAllRooms(Pageable pageable) {
-		Page<Room> rooms = iRoomService.getAllRooms(pageable);
+	public ResponseEntity<?> getAllRooms() {
+		List<Room> rooms = iRoomService.getAllRooms();
 
-		List<RoomDTO> dtos = modelMapper.map(rooms.getContent(), new TypeToken<List<RoomDTO>>() {
+		List<RoomDTO> dtos = modelMapper.map(rooms, new TypeToken<List<RoomDTO>>() {
 		}.getType());
-
-		Page<RoomDTO> dtoPages = new PageImpl<>(dtos, pageable, rooms.getTotalElements());
-		return new ResponseEntity<>(dtoPages, HttpStatus.OK);
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 }

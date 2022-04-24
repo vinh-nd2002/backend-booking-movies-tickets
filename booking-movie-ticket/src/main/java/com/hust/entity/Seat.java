@@ -1,7 +1,5 @@
 package com.hust.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -42,14 +39,11 @@ public class Seat {
 
 	@ManyToOne
 	@JoinColumn(name = "room_id")
-	private Room seatOfRoom;
+	private Room seatsOfRoom;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User seatOfuser;
-	
-	@OneToMany(mappedBy = "ticketOfSeat")
-	private List<Ticket> tickets;
+	@JoinColumn(name = "account_id")
+	private Account seatsOfAccount;
 
 	public enum SeatType {
 		VIP, Thường

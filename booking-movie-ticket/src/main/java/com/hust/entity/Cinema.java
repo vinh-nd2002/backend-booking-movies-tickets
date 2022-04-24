@@ -31,14 +31,13 @@ public class Cinema {
 	@Column(name = "cinema_name", length = 50, unique = true, nullable = false)
 	private String cinemaName;
 
-	@Column(name = "address", length = 100, nullable = false)
+	@Column(name = "cinema_address", length = 100, nullable = false)
 	private String cinemaAddress;
 
 	@ManyToOne
 	@JoinColumn(name = "cineplex_id")
-	private Cineplex cineplex;
+	private Cineplex cinemasOfCineplex;
 
-	@OneToMany(mappedBy = "roomOfCinema")
+	@OneToMany(mappedBy = "roomsOfCinema")
 	private List<Room> rooms;
-
 }

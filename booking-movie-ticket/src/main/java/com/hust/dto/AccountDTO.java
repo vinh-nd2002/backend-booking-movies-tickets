@@ -2,16 +2,18 @@ package com.hust.dto;
 
 import java.util.Date;
 
-import com.hust.entity.User.GenderType;
+import org.springframework.hateoas.RepresentationModel;
+
+import com.hust.entity.Account.GenderType;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserDTO {
+public class AccountDTO extends RepresentationModel<AccountDTO> {
 
-	private int userId;
+	private int accountId;
 
 	private String username;
 
@@ -29,5 +31,14 @@ public class UserDTO {
 
 	private String address;
 
-	private String avatarUrl;
+	private ImageDTO avatar;
+
+	@Data
+	@NoArgsConstructor
+	public static class ImageDTO {
+		private int imgId;
+
+		private String imgUrl;
+	}
+
 }

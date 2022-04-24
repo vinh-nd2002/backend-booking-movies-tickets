@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,8 +24,10 @@ public class RoomDTO {
 	public static class ScheduleDTO {
 		private int scheduleId;
 
+		@JsonFormat(pattern = "dd/MM/YYYY")
 		private Date scheduleDate;
 
+		@JsonFormat(pattern = "HH/MM/SS")
 		private Date scheduleStart;
 
 		private MovieDTO scheduleOfMovie;
@@ -33,13 +37,19 @@ public class RoomDTO {
 		static class MovieDTO extends RepresentationModel<MovieDTO> {
 			private int movieId;
 
-			private Date movieRelease;
-
 			private String movieName;
 
-			private String moviePoster;
+			private boolean movieMtatus;
 
-			private boolean status;
+			private ImageDTO moviePoster;
+
+			@Data
+			@NoArgsConstructor
+			static class ImageDTO {
+				private short imgId;
+
+				private String imgUrl;
+			}
 		}
 	}
 }

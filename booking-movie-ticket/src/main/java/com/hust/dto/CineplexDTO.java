@@ -16,7 +16,15 @@ public class CineplexDTO extends RepresentationModel<CineplexDTO> {
 
 	private String cineplexName;
 
-	private String cineplexLogo;
+	private ImageDTO cineplexLogo;
+
+	@Data
+	@NoArgsConstructor
+	public static class ImageDTO {
+		private int imgId;
+
+		private String imgUrl;
+	}
 
 	private List<CinemaDTO> cinemas;
 
@@ -24,8 +32,11 @@ public class CineplexDTO extends RepresentationModel<CineplexDTO> {
 	@NoArgsConstructor
 	public static class CinemaDTO extends RepresentationModel<CinemaDTO> {
 		private int cinemaId;
+
 		private String cinemaCode;
+
 		private String cinemaName;
+
 		private String cinemaAddress;
 	}
 

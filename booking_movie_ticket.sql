@@ -2,67 +2,64 @@ DROP DATABASE IF EXISTS booking_movie_ticket;
 CREATE DATABASE IF NOT EXISTS booking_movie_ticket;
 USE booking_movie_ticket;
 
-DROP TABLE IF EXISTS 	`User`;
-CREATE TABLE IF NOT EXISTS `User` ( 	
-	`user_id` 		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+DROP TABLE IF EXISTS 	`Account`;
+CREATE TABLE IF NOT EXISTS `Account` ( 	
+	`account_id` 	INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	`username`	 	CHAR(50) NOT NULL UNIQUE CHECK (LENGTH(`username`) >= 6 AND LENGTH(`username`) <= 50),
 	`email` 		CHAR(50) NOT NULL UNIQUE CHECK (LENGTH(`email`) >= 10 AND LENGTH(`email`) <= 50),
     `number_phone` 	CHAR(10) NOT NULL ,
 	`password` 		VARCHAR(800) NOT NULL,
-    `firstName` 	NVARCHAR(30) NOT NULL,
-	`lastName` 		NVARCHAR(30) NOT NULL,
+    `first_name` 	NVARCHAR(30) NOT NULL,
+	`last_name` 	NVARCHAR(30) NOT NULL,
     `date_of_birth` DATE NOT NULL,
     `gender` 		ENUM ('MALE','FEMALE') NOT NULL,
     `address` 		NVARCHAR(100) NOT NULL,
-    `role` 			ENUM('Customer','Manager') DEFAULT 'Customer',
-    `avatarUrl`		TEXT,
+    `role` 			ENUM('CUSTOMER','ADMIN') DEFAULT 'CUSTOMER',
     `created_date` 	DATETIME DEFAULT NOW()
 );
-
-INSERT INTO `User` 	(`username`,			`email`,					`number_phone`,					`password`,														`firstName`,	`lastName`, 	`date_of_birth`,	`gender`, 	`address`,			`role`,  		`avatarUrl`		)
-VALUE				('hanh.havan@vti',		'hanhhanoi1999@gmail.com',	'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Hà'	,		'Văn Hanh',	 	'1997-05-05',		'MALE', 	'Nghệ An',			'Customer' 	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	), 
-					('thanhhung12@vti',		'hung122112@gmail.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thanh Hưng',	'2002-01-01',		'MALE', 	'Nghệ An',			'Customer' 	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	), 
-					('can.tuananh@vti',		'cananh.tuan12@vti.com',	'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Cấn'	,		'Tuấn Anh',		'2001-01-01',		'MALE', 	'Hà Nội',			'Customer' 	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	), 
-					('toananh123@vti',		'toananh123@vti.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Anh Toàn',		'1996-01-01',		'MALE', 	'TP. Hồ Chí Minh',	'Customer' 	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	), 
-					('manhhung123@vti',		'manhhung123@vti.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Mạnh Hùng',	'1994-01-01',		'MALE', 	'Thanh Hóa',		'Manager' 	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	),
-					('maianhvti123',		'maianhng@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Mai Anh',		'1982-01-01',		'MALE', 	'Nghệ An',			'Customer'	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	),
-					('tuanvti12344',		'tuan1234@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Văn Tuấn',		'1995-01-01',		'MALE', 	'Đà Nẵng',			'Customer'	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	),
-					('ngthuy123',			'thuyhanoi@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thị Thủy',		'1977-02-01',		'MALE', 	'Thừa Thiên Huế',	'Customer'	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	),
-					('quanganhvti',			'quanganh@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Quang Anh',	'1981-01-01',		'MALE', 	'Nghệ An',			'Manager' 	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	),
-					('hoanghungvti',	    'hunghoang@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Vũ'	,		'Hoàng Hưng',	'1997-01-01',		'MALE',		'Hà Nội',			'Customer'	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	),
-					('vananhvti',			'vananhb1@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Vân Anh',		'1997-01-01',		'MALE', 	'Hải Phòng',		'Customer'	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	),
-					('mailanvti',			'mailan123@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thị Trinh',	'1997-01-01',		'MALE', 	'Nghệ An',			'Manager' 	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	),
-					('tuanhungvti',			'tuanhung@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Vũ'	,		'Tuấn Hưng',	'1997-01-01',		'MALE', 	'Hải Phòng',		'Customer'	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	),
-					('xuanmaivti',			'xuanmai12@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Xuân Mai',		'1997-01-01',		'MALE', 	'Nghệ An',			'Customer'	,		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/2048px-User_font_awesome.svg.png'	);
+INSERT INTO `Account` 	(`username`,			`email`,					`number_phone`,					`password`,														`first_name`,	`last_name`, 	`date_of_birth`,	`gender`, 	`address`,			`role`	)
+VALUE				('hanh.havan@vti',		'hanhhanoi1999@gmail.com',	'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Hà'	,		'Văn Hanh',	 	'1997-05-05',		'MALE', 	'Nghệ An',			'CUSTOMER' 	), 
+					('thanhhung12@vti',		'hung122112@gmail.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thanh Hưng',	'2002-01-01',		'MALE', 	'Nghệ An',			'CUSTOMER' 	), 
+					('can.tuananh@vti',		'cananh.tuan12@vti.com',	'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Cấn'	,		'Tuấn Anh',		'2001-01-01',		'MALE', 	'Hà Nội',			'CUSTOMER' 	), 
+					('toananh123@vti',		'toananh123@vti.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Anh Toàn',		'1996-01-01',		'MALE', 	'TP. Hồ Chí Minh',	'CUSTOMER' 	), 
+					('manhhung123@vti',		'manhhung123@vti.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Mạnh Hùng',	'1994-01-01',		'MALE', 	'Thanh Hóa',		'ADMIN' 	 	),
+					('maianhvti123',		'maianhng@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Mai Anh',		'1982-01-01',		'MALE', 	'Nghệ An',			'CUSTOMER'	 	),
+					('tuanvti12344',		'tuan1234@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Văn Tuấn',		'1995-01-01',		'MALE', 	'Đà Nẵng',			'CUSTOMER'	 	),
+					('ngthuy123',			'thuyhanoi@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thị Thủy',		'1977-02-01',		'MALE', 	'Thừa Thiên Huế',	'CUSTOMER'	 	),
+					('quanganhvti',			'quanganh@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Quang Anh',	'1981-01-01',		'MALE', 	'Nghệ An',			'ADMIN' 	 	),
+					('hoanghungvti',	    'hunghoang@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Vũ'	,		'Hoàng Hưng',	'1997-01-01',		'MALE',		'Hà Nội',			'CUSTOMER'	 	),
+					('vananhvti',			'vananhb1@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Vân Anh',		'1997-01-01',		'MALE', 	'Hải Phòng',		'CUSTOMER'	 	),
+					('mailanvti',			'mailan123@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thị Trinh',	'1997-01-01',		'MALE', 	'Nghệ An',			'ADMIN' 	 	),
+					('tuanhungvti',			'tuanhung@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Vũ'	,		'Tuấn Hưng',	'1997-01-01',		'MALE', 	'Hải Phòng',		'CUSTOMER'	 	),
+					('xuanmaivti',			'xuanmai12@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Xuân Mai',		'1997-01-01',		'MALE', 	'Nghệ An',			'CUSTOMER'	 	);
 
 DROP TABLE IF EXISTS 	`Cineplex`;
 CREATE TABLE IF NOT EXISTS `Cineplex` (
-    `cineplex_id` 		TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `cineplex_code` 	CHAR(20) UNIQUE NOT NULL,
-	`cineplex_name` 	CHAR(50) UNIQUE NOT NULL,
-    `logo` 				TEXT NOT NULL 
+    `cineplex_id` 		TINYINT 	UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `cineplex_code`		CHAR(30) 	UNIQUE NOT NULL,
+	`cineplex_name` 	CHAR(50) 	UNIQUE NOT NULL
 );
 
 
-INSERT INTO `Cineplex` 	(`cineplex_code` ,	`cineplex_name`,		`logo`) 
-VALUE					('BHDStar', 		'BHD Star Cineplex',  	'https://www.bhdstar.vn/wp-content/uploads/2019/06/BHDStar_Logo_Tron.png'),
-						('CGV', 			'CGV', 					'https://gigamall.com.vn/data/2019/05/06/11365490_logo-cgv-500x500.jpg'),
-                        ('CineStar', 		'CineStar',  			'https://www.tiendauroi.com/wp-content/uploads/2019/06/caa01345215bca3f35f8174a08e838ff3f3b1517_2_690x340.jpeg'),
-                        ('Galaxy', 			'Galaxy Cinema',  		'https://hiu.vn/wp-content/uploads/2021/04/galaxy1.png'),
-                        ('LotteCinema', 	'Lotte Cinema',  		'https://cdn.nhanlucnganhluat.vn/uploads/images/D69545BE/logo/2019-04/pictures_library_6235_20180102135750_4563.jpg'),
-                        ('MegaGS', 			'MegaGS',  				'https://yt3.ggpht.com/ytc/AKedOLQDsorTLvXwPpkafb4NJJ7Q5k29LLymCQJonaV2Zg=s900-c-k-c0x00ffffff-no-rj');
+INSERT INTO `Cineplex` 	(`cineplex_code` ,	`cineplex_name` 	) 
+VALUE					('BHDStar'		, 	'BHD Star Cineplex'	),
+						('CGV'			, 	'CGV' 				),
+                        ('CineStar'		, 	'CineStar'			),
+                        ('Galaxy'		, 	'Galaxy Cinema'		),
+                        ('LotteCinema'	, 	'Lotte Cinema'		),
+                        ('MegaGS'		, 	'MegaGS'			);
                         
 DROP TABLE IF EXISTS 	`Cinema`;
 CREATE TABLE IF NOT EXISTS `Cinema` (
     `cinema_id` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `cinema_code` 		CHAR(50) UNIQUE NOT NULL,
 	`cinema_name` 		CHAR(50) NOT NULL,
-    `address` 			NVARCHAR(100) NOT NULL,
+    `cinema_address` 	NVARCHAR(100) NOT NULL,
     `cineplex_id` 		TINYINT UNSIGNED NOT NULL,
-    FOREIGN KEY (`cineplex_id`)	REFERENCES 	`Cineplex`(`cineplex_id`)
+    FOREIGN KEY (`cineplex_id`)	REFERENCES 	`Cineplex`(`cineplex_id`) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
-INSERT INTO `Cinema` 	(`cinema_code` ,								`cinema_name`,							`address`, 																						`cineplex_id`) 
+INSERT INTO `Cinema` 	(`cinema_code` ,								`cinema_name`,								`cinema_address`, 																						`cineplex_id`) 
 VALUE 				('bhd-star-cineplex-3-2', 					'BHD Star Cineplex - 3/2'  , 						'L5-Vincom 3/2, 3C Đường 3/2, Q.10', 															'1'),
 					('bhd-star-cineplex-pham-ngoc-thach', 		'BHD Star Cineplex - Vincom Phạm Ngọc Thạch'  , 	'Tầng 8 TTTM Vincom, Số 2 P.Phạm Ngọc Thạch, Kim Liên, Đống Đa, Hà Nội', 						'1'),
 					('bhd-star-cineplex-pham-hung', 			'BHD Star Cineplex - Phạm Hùng'  , 					'L4-Satra Phạm Hùng, C6/27 Phạm Hùng, Bình Chánh', 												'1'),
@@ -96,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `Room` (
 	`room_id` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	`room_name` 	NVARCHAR(20) NOT NULL,
 	`cinema_id` 	INT UNSIGNED NOT NULL,
-	FOREIGN KEY (`cinema_id`)	REFERENCES 	`Cinema`(`cinema_id`)
+	FOREIGN KEY (`cinema_id`)	REFERENCES 	`Cinema`(`cinema_id`) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 INSERT INTO `Room` (`room_name`, `cinema_id`) VALUES
  ('Viva', 18),
@@ -258,32 +255,74 @@ CREATE TABLE IF NOT EXISTS `Movie` (
   `movie_trailer` 		TEXT DEFAULT NULL,
   `movie_release` 		DATE DEFAULT NULL,
   `movie_lenght` 		TINYINT UNSIGNED DEFAULT NULL,
-  `movie_poster` 		TEXT DEFAULT NULL,
-  `evaluate` 			TINYINT UNSIGNED DEFAULT 6,
-  `status` 				BOOLEAN DEFAULT 0,
-  `movie_price` 		INT UNSIGNED DEFAULT 60000
+  `movie_evaluate` 		TINYINT UNSIGNED ,
+  `movie_status` 		BOOLEAN DEFAULT 0 ,
+  `movie_price`			INT UNSIGNED DEFAULT 60000
 ) ;
  
-INSERT INTO `Movie` (`movie_name`,`movie_trailer`,`movie_release`,`movie_lenght`,`movie_poster`,`evaluate`,`status`, `movie_description`) VALUES
-('SHANG-CHI','https://www.youtube.com/watch?v=5K66kfVce0k','2022-01-12',122,'https://thegioidienanh.vn/stores/news_dataimages/anhvu/092021/06/11/3804_1._BY_phim_hanh_YYng_sieu_anh_hung_hoan_toan_mYi_Shang-Chi_va_huyYn_thoYi_ThYp_Luan_chinh_thYc_ra_mYt_vao_thang_9.jpg?rt=20210906113822', 8, 0, 'Shang-Chi và huyền thoại Thập Luân Shang Chi and the Legend of the Ten Rings 2021 Full HD Vietsub Thuyết Minh  là bộ phim thuộc giai đoạn 4 của Vũ trụ điện ảnh Marvel. Nhân vật này được biết đến như một bậc thầy Kung Fu, tinh thông võ thuật. Sức mạnh của Shang-Chi đến từ hàng ngàn giờ luyện tập miệt mài và sự kỷ luật cao độ với bản thân. Siêu anh hùng võ thuật này được chính bố dạy dỗ để trở thành một sát thủ chuyên nghiệp và kế thừa tập đoàn tội ác của ông.'),
-('TRĂNG RƠI','https://youtu.be/zVgF4LY3_Ew','2022-02-15',122,'https://azreview.vn/wp-content/uploads/2022/02/phim-trang-roi-moonfall.jpg', 8, 0, 'Năm 2011, một tai nạn ngoài vũ trụ khiến một phi hành gia tử vong đầy bí ẩn. Đúng 10 năm sau, Mặt Trăng đột nhiên rời khỏi quỹ đạo và dần trên đường va chạm với Trái Đất. Chuyện dường như có liên quan tới tai nạn năm xưa, và chỉ có những đồng đội của phi hành gia xấu số kia mới có thể tìm ra chân tướng sự việc, cũng như bản chất của Mặt Trăng sau hàng tỷ năm bị giấu kín.'),
-('XE CẤP CỨU','https://youtu.be/iVJCALQAOyU','2022-03-18',137,'https://upload.wikimedia.org/wikipedia/vi/thumb/1/1d/Ambulance2022poster.jpg/800px-Ambulance2022poster.jpg', 8, 0, '2 anh em tham gia một vụ cướp ngân hàng và chạy trốn trên chiếc xe cứu thương. Và từ đây, cuộc truy đuổi nghẹt thở và gay cấn nhất trên khắp đường phố LA bắt đầu.'),
-('NHỮNG KẺ XẤU XA','https://youtu.be/F1uCqPe18o4','2022-03-25',100,'https://media.ex-cdn.com/EXP/media.nongnghiep.vn/files/content/2022/03/26/phim-chieu-rap-nhung-ke-xau-xa-084735_183.jpg', 7, 0, 'Hành trình trở thành người tốt đầy gay cấn và nhiều tiếng cười của băng đảng những loài thú xấu xa.'),
-('MẾN GÁI MIỀN TÂY','https://youtu.be/9uw_YM9Uht4','2022-03-25',125,'https://www.cgv.vn/media/catalog/product/cache/1/image/1800x/71252117777b696995f01934522c402d/m/_/m_n_g_i_mi_n_t_y_-_official_poster_-_kc_25032022_1_.jpg', 8, 0, 'Bối cảnh câu chuyện diễn ra sau web drama 12 năm, khi cô và chồng là Nhớ (Hoàng Nguyên) đã cùng nhau vượt qua rất nhiều thử thách và có được cuộc sống hạnh phúc bên nhau. Nhưng chính lúc này, sóng gió lại nổi lên. Nhớ bắt đầu không chấp nhận được giới tính thật sự của vợ mình và có mối quan hệ với người con gái khác.'),
-('MORBIUS','https://youtu.be/L_YG4_68TZc','2022-04-01',104,'https://www.google.com/url?sa=i&url=https%3A%2F%2Fmoveek.com%2Fphim%2Fmorbius%2F&psig=AOvVaw0ZlifyjLJEX_18CsRWB2rm&ust=1649757312494000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCNixpYffi_cCFQAAAAAdAAAAABAU', 9, 0, 'Một huyền thoại Marvel mới sắp lộ diện. Là ác nhân hay anh hùng? Sẽ phá hủy hay chữa lành thế giới này? Morbius khởi chiếu tại CGV 01.04.2022'),
-('KHỬ NGHIỆP','https://youtu.be/7vpd7VjdQNQ','2022-04-02',125,'https://moveek.com/storage/media/cache/short/624323c449135875913979.jpeg', 8, 0, 'Hans luôn tỏ ra là người làm chủ gia đình, nhưng thực chất không phải là một người mạnh mẽ. Kế hoạch về thăm nhà cũng khiến anh cảm thấy vô cùng áp lực bởi vợ và hai con luôn chậm chạp, còn người mẹ thì liên tục gọi điện hối thúc. Sự bức bối đó đã khiến Hans liều lĩnh tăng ga tối đa trên đường cao tốc và xảy ra mâu thuẫn với một người đàn ông nguy hiểm. Vô tình, hành trình về thăm ông bà bỗng hóa cuộc trốn chạy kẻ sát nhân điên rồ với cách thức giết người tàn ác.'),
-('SINH VẬT HUYỀN BÍ: NHỮNG BÍ MẬT CỦA DUMBLEDORE','https://youtu.be/DRc7YVRF6MY','2022-04-08',143,'https://moveek.com/storage/media/cache/large/621d9bd1a0f18432625529.jpg', 8, 0, 'Câu chuyện của phần phim thứ ba này xoay quanh việc Giáo sư Albus Dumbledore (Jude Law) phát hiện ra việc Phù thủy Bóng tối quyền năng Gellert Grindelwald (Mads Mikkelsen) đang âm mưu chiếm lấy quyền kiểm soát Thế giới Phù thủy. Không thể một mình ngăn chặn đoàn quân hùng mạnh của của Grindelwald, Dumbledore đặt niềm tin vào Nhà nghiên cứu sinh vật huyền bí Newt Scamander (Eddie Redmayne) cùng đồng đội thực hiện nhiệm vụ đầy hiểm nguy này. Trong tình thế ngàn cân treo sợi tóc như vậy, liệu thầy Dumbledore có thể đứng ngoài được bao lâu?'),
-('ÁC MỘNG','https://youtu.be/G-qmPTGYZrU','2022-04-10',83,'https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/t/h/the_free_fall_-_payoff_poster-nkc_08042022_1_.jpg', 8, 0, 'Sau khi cố gắng tự lấy mạng sống của mình, một phụ nữ trẻ phải vật lộn với một người chồng “kỳ lạ”.'),
-('NHÍM SONIC 2','https://www.youtube.com/watch?v=JmJfFmoMDwE&t=1s','2022-04-15',122,'https://www.cgv.vn/media/banner/cache/1/b58515f018eb873dafa430b6f9ae0c1e/s/o/sonic_980_x_448.jpg', 8, 1, 'Nhím Sonic 2 – Sonic the Hedgehog 2 là một bộ phim hài phiêu lưu hành động năm 2022 dựa trên thương hiệu trò chơi điện tử do Sega xuất bản. Đây là phần tiếp theo của Sonic the Hedgehog và là bộ phim thứ hai trong Sonic Cinematic Universe. Khi Robotnik tìm cách quay trở về Trái Đất thành công, ông ta có một đồng minh mới là Knuckles hùng mạnh, liệu Sonic và người bạn ới Tails có thể ngăn chặn được âm mưu điên rồi để cứu lấy thế giới?'),
-('Ê ÔNG GIÀ YÊU HA','https://youtu.be/WYrV5Npz3vo','2022-04-15',114,'https://i.ytimg.com/vi/WYrV5Npz3vo/maxresdefault.jpg', 8, 1, 'Chuyện tình giữa nữ chuyên viên tâm lý và chàng soái ca bị trầm cảm.'),
-('THỎ GÀ RÀ KHO BÁU','https://youtu.be/45x7W907TBg','2022-05-01',83,'https://i.rada.vn/data/image/2022/04/05/Chickenhare-and-the-Hamster-of-Darkness-1.jpg', 8, 1, 'Bộ phim theo chân cuộc phiêu lưu của Chickenhare, vị anh hùng trẻ tuổi sinh ra là nửa thỏ rừng nửa gà, được Vua Peter- một nhà thám hiểm thỏ rừng nổi tiếng nhận nuôi. Chickenhare luôn háo hức với những chuyến phiêu lưu, và mong muốn được yêu thương mặc cho những khác biệt của mình. Khi kẻ phản diện sừng sỏ nhất của vương quốc, cũng chính là cậu của Chickenhare trốn khỏi ngục và đe dọa lật đổ cha mình, Chickenhare dấn thân vào một cuộc đua kỳ thú cùng với Abe- chú rùa thích châm chọc, và Meg- nữ chuyên gia võ thuật liều lĩnh nhằm ngăn chặn âm mưu của cậu mình.'),
-('PHÙ THỦY TỐI THƯỢNG TRONG ĐA VŨ TRỤ HỖN LOẠN','https://youtu.be/nBNtRvpCmms','2022-05-05',135,'https://cuongphim.com/wp-content/uploads/2021/12/doctor-strange-2-xuat-hien-vai-dien-cameo-cuong-phim-2-cuong-phim.jpg', 10, 1, 'Sau các sự kiện của Avengers: Endgame, Tiến sĩ Stephen Strange tiếp tục nghiên cứu về Viên đá Thời gian. Nhưng một người bạn cũ đã trở thành kẻ thù tìm cách tiêu diệt mọi phù thủy trên Trái đất, làm xáo trộn kế hoạch của Strange và cũng khiến anh ta mở ra một tội ác khôn lường.'),
-('TURNING RED: GẤU ĐỎ BIẾN HÌNH','https://youtu.be/gkTVd7X-iLk','2022-05-15',99,'https://bloganchoi.com/wp-content/uploads/2022/03/gau-do-2.jpg', 8, 1, 'Turning Red - Gấu Đỏ Biến Hình" từ Disney và Pixar kể về Mei Lee, cô bé 13 tuổi tự tin và ngổ ngáo với những sự hỗn loạn của tuổi mới lớn. Mẹ của Mei luôn cố gắng bảo bọc và ở bên cạnh con gái mọi lúc mọi nơi, khiến cô bé cảm thấy như một thảm hoạ vậy. Và cứ như thể những thay đổi về sở thích, các mối quan hệ và thể chất còn chưa đủ, mỗi khi Mei trở nên quá phấn khích (mà thật ra lúc nào cũng vậy), "bùm", cô bé sẽ biến hình thành một chú gấu đỏ siêu cute khổng lồ luôn!'),
-('NGƯỜI NHỆN KHÔNG CÒN NHÀ','https://youtu.be/daHCu_jU5mQ','2022-05-15',149,'https://image.thanhnien.vn/1200x630/Uploaded/2022/tnabtw/2021_11_17/poster-3930.jpg', 8, 1, 'Lần đầu tiên trong lịch sử điện ảnh của Người Nhện, thân phận người hàng xóm thân thiện bị lật mở, khiến trách nhiệm làm một Siêu Anh Hùng xung đột với cuộc sống bình thường và đặt người anh quan tâm nhất vào tình thế nguy hiểm. Khi anh nhờ đến giúp đỡ của Doctor Strange để khôi phục lại bí mật, phép thuật đã gây ra lỗ hổng thời không, giải phóng những ác nhân mạnh mẽ nhất từng đối đầu với Người Nhện từ mọi vũ trụ. Bây giờ, Peter sẽ phải vượt qua thử thách lớn nhất của mình, nó sẽ thay đổi không chỉ tương lai của chính anh mà còn là tương lai của cả Đa Vũ Trụ.'),
-('Batman: Vạch trần sự thật','https://youtu.be/ON39jkS9Soo','2022-05-16',183,'https://i.ex-cdn.com/60giay.com/files/content/2022/02/28/kjzxcykivlrp6vnes3ftbylqslbw7gtdjfcpqnbx-1533.jpg', 8, 1, 'Bộ phim đưa khán giả dõi theo hành trình phá án và diệt trừ tội phạm của chàng Hiệp sĩ Bóng đêm Batman, với một câu chuyện hoàn toàn khác biệt với những phần phim đã ra mắt trước đây. Thế giới ngầm ở thành phố Gotham xuất hiện một tên tội phạm kỳ lạ tên Riddler chuyên nhắm vào nhân vật tai to mặt lớn. Và sau mỗi lần phạm tội, hắn đều để lại một câu đố bí ẩn cho Batman. Khi bắt tay vào phá giải các câu đố này, Batman dần lật mở những bí ẩn động trời giữa gia đình anh và tên trùm tội phạm Carmine Falcon'),
-('MINIONS: SỰ TRỖI DẬY CỦA GRU','https://youtu.be/dTQXlDV16SY','2022-06-01',125,'https://cinema2cinema.com/vi/wp-content/uploads/2020/08/Minions-2-Su-troi-day-cua-Gru-bi-hoan-lai.jpg', 9, 1, 'Hành trình phiêu lưu của #Gru song hành cùng với #Otto và viên đá của ác nhân MINIONS: SỰ TRỖI DẬY CỦA GRU - DCKC: 2021'),
-('TIẾNG “KÊU” CỨU LÚC NỬA ĐÊM','https://youtu.be/HM28wBN-5zc','2022-06-30',103,'https://i.rada.vn/data/image/2022/04/07/tieng-keu-cuu-luc-nua-dem-700.jpg', 8, 1, 'Kyeong-mi là một cô gái khiếm thính làm việc tại một tổng đài hỗ trợ người khiếm thính. Một đêm đi làm về muộn, cô tình cờ chứng kiến So Jung-eun, một cô gái trẻ bị đâm tàn bạo trên con đường vắng. Từ giây phút đó, Kyeong-mi trở thành mục tiêu mới của kẻ sát nhân hai mặt Do-sik. Do-sik điên cuồng rượt đuổi cô gái khiếm thính để bịt đầu mối. Kyeong-mi, với bất lợi không nghe được bất kỳ âm thanh nào xung quanh, trở thành con mồi đáng thương trong cuộc rượt đuổi nghẹt thở này. Giữa cô gái khiếm thính và tên sát nhân điên loạn, cuộc rượt đuổi sẽ kết thúc như thế nào?'),
-('Án Mạng Trên Sông Nile','https://youtu.be/_9Xoljxlqg8','2022-07-15',127,'https://bilutv.link/film/20001/big.jpg', 8, 1, 'Án Mạng Trên Sông Nile xoay quanh chuyến đi tham quan Ai Cập của thám tử Poirot. Trên chiếc du thuyền nhỏ, ông bắt gặp một cặp nam thanh nữ tú: nàng triệu phú trẻ Linnet Doyle và người chồng mới cưới Simon Doyle đang hưởng tuần trăng mật. Chuyến đi hạnh phúc của hai người bị phá hỏng bởi người tình cũ của Simon - Jacqueline de Bellefort không ngừng bám theo phá đám.');
+INSERT INTO `Movie` (`movie_name`,`movie_trailer`,`movie_release`,`movie_lenght`,`movie_evaluate`,`movie_status`, `movie_description`) VALUES
+('SHANG-CHI','https://www.youtube.com/watch?v=5K66kfVce0k','2022-01-12',122,8, 0, 'Shang-Chi và huyền thoại Thập Luân Shang Chi and the Legend of the Ten Rings 2021 Full HD Vietsub Thuyết Minh  là bộ phim thuộc giai đoạn 4 của Vũ trụ điện ảnh Marvel. Nhân vật này được biết đến như một bậc thầy Kung Fu, tinh thông võ thuật. Sức mạnh của Shang-Chi đến từ hàng ngàn giờ luyện tập miệt mài và sự kỷ luật cao độ với bản thân. Siêu anh hùng võ thuật này được chính bố dạy dỗ để trở thành một sát thủ chuyên nghiệp và kế thừa tập đoàn tội ác của ông.'),
+('TRĂNG RƠI','https://youtu.be/zVgF4LY3_Ew','2022-02-15',122, 8, 0, 'Năm 2011, một tai nạn ngoài vũ trụ khiến một phi hành gia tử vong đầy bí ẩn. Đúng 10 năm sau, Mặt Trăng đột nhiên rời khỏi quỹ đạo và dần trên đường va chạm với Trái Đất. Chuyện dường như có liên quan tới tai nạn năm xưa, và chỉ có những đồng đội của phi hành gia xấu số kia mới có thể tìm ra chân tướng sự việc, cũng như bản chất của Mặt Trăng sau hàng tỷ năm bị giấu kín.'),
+('XE CẤP CỨU','https://youtu.be/iVJCALQAOyU','2022-03-18',137, 8, 0, '2 anh em tham gia một vụ cướp ngân hàng và chạy trốn trên chiếc xe cứu thương. Và từ đây, cuộc truy đuổi nghẹt thở và gay cấn nhất trên khắp đường phố LA bắt đầu.'),
+('NHỮNG KẺ XẤU XA','https://youtu.be/F1uCqPe18o4','2022-03-25',100, 7, 0, 'Hành trình trở thành người tốt đầy gay cấn và nhiều tiếng cười của băng đảng những loài thú xấu xa.'),
+('MẾN GÁI MIỀN TÂY','https://youtu.be/9uw_YM9Uht4','2022-03-25',125, 8, 0, 'Bối cảnh câu chuyện diễn ra sau web drama 12 năm, khi cô và chồng là Nhớ (Hoàng Nguyên) đã cùng nhau vượt qua rất nhiều thử thách và có được cuộc sống hạnh phúc bên nhau. Nhưng chính lúc này, sóng gió lại nổi lên. Nhớ bắt đầu không chấp nhận được giới tính thật sự của vợ mình và có mối quan hệ với người con gái khác.'),
+('MORBIUS','https://youtu.be/L_YG4_68TZc','2022-04-01',104, 9, 0, 'Một huyền thoại Marvel mới sắp lộ diện. Là ác nhân hay anh hùng? Sẽ phá hủy hay chữa lành thế giới này? Morbius khởi chiếu tại CGV 01.04.2022'),
+('KHỬ NGHIỆP','https://youtu.be/7vpd7VjdQNQ','2022-04-02',125, 8, 0, 'Hans luôn tỏ ra là người làm chủ gia đình, nhưng thực chất không phải là một người mạnh mẽ. Kế hoạch về thăm nhà cũng khiến anh cảm thấy vô cùng áp lực bởi vợ và hai con luôn chậm chạp, còn người mẹ thì liên tục gọi điện hối thúc. Sự bức bối đó đã khiến Hans liều lĩnh tăng ga tối đa trên đường cao tốc và xảy ra mâu thuẫn với một người đàn ông nguy hiểm. Vô tình, hành trình về thăm ông bà bỗng hóa cuộc trốn chạy kẻ sát nhân điên rồ với cách thức giết người tàn ác.'),
+('SINH VẬT HUYỀN BÍ: NHỮNG BÍ MẬT CỦA DUMBLEDORE','https://youtu.be/DRc7YVRF6MY','2022-04-08',143, 8, 0, 'Câu chuyện của phần phim thứ ba này xoay quanh việc Giáo sư Albus Dumbledore (Jude Law) phát hiện ra việc Phù thủy Bóng tối quyền năng Gellert Grindelwald (Mads Mikkelsen) đang âm mưu chiếm lấy quyền kiểm soát Thế giới Phù thủy. Không thể một mình ngăn chặn đoàn quân hùng mạnh của của Grindelwald, Dumbledore đặt niềm tin vào Nhà nghiên cứu sinh vật huyền bí Newt Scamander (Eddie Redmayne) cùng đồng đội thực hiện nhiệm vụ đầy hiểm nguy này. Trong tình thế ngàn cân treo sợi tóc như vậy, liệu thầy Dumbledore có thể đứng ngoài được bao lâu?'),
+('ÁC MỘNG','https://youtu.be/G-qmPTGYZrU','2022-04-10',83, 9 , 0, 'Sau khi cố gắng tự lấy mạng sống của mình, một phụ nữ trẻ phải vật lộn với một người chồng “kỳ lạ”.'),
+('NHÍM SONIC 2','https://www.youtube.com/watch?v=JmJfFmoMDwE&t=1s','2022-04-15',122, 8, 1, 'Nhím Sonic 2 – Sonic the Hedgehog 2 là một bộ phim hài phiêu lưu hành động năm 2022 dựa trên thương hiệu trò chơi điện tử do Sega xuất bản. Đây là phần tiếp theo của Sonic the Hedgehog và là bộ phim thứ hai trong Sonic Cinematic Universe. Khi Robotnik tìm cách quay trở về Trái Đất thành công, ông ta có một đồng minh mới là Knuckles hùng mạnh, liệu Sonic và người bạn ới Tails có thể ngăn chặn được âm mưu điên rồi để cứu lấy thế giới?'),
+('Ê ÔNG GIÀ YÊU HA','https://youtu.be/WYrV5Npz3vo','2022-04-15',114, 8, 1, 'Chuyện tình giữa nữ chuyên viên tâm lý và chàng soái ca bị trầm cảm.'),
+('THỎ GÀ RÀ KHO BÁU','https://youtu.be/45x7W907TBg','2022-05-01',83, 8, 1,'Bộ phim theo chân cuộc phiêu lưu của Chickenhare, vị anh hùng trẻ tuổi sinh ra là nửa thỏ rừng nửa gà, được Vua Peter- một nhà thám hiểm thỏ rừng nổi tiếng nhận nuôi. Chickenhare luôn háo hức với những chuyến phiêu lưu, và mong muốn được yêu thương mặc cho những khác biệt của mình. Khi kẻ phản diện sừng sỏ nhất của vương quốc, cũng chính là cậu của Chickenhare trốn khỏi ngục và đe dọa lật đổ cha mình, Chickenhare dấn thân vào một cuộc đua kỳ thú cùng với Abe- chú rùa thích châm chọc, và Meg- nữ chuyên gia võ thuật liều lĩnh nhằm ngăn chặn âm mưu của cậu mình.'),
+('PHÙ THỦY TỐI THƯỢNG TRONG ĐA VŨ TRỤ HỖN LOẠN','https://youtu.be/nBNtRvpCmms','2022-05-05',135, 10, 1, 'Sau các sự kiện của Avengers: Endgame, Tiến sĩ Stephen Strange tiếp tục nghiên cứu về Viên đá Thời gian. Nhưng một người bạn cũ đã trở thành kẻ thù tìm cách tiêu diệt mọi phù thủy trên Trái đất, làm xáo trộn kế hoạch của Strange và cũng khiến anh ta mở ra một tội ác khôn lường.'),
+('TURNING RED: GẤU ĐỎ BIẾN HÌNH','https://youtu.be/gkTVd7X-iLk','2022-05-15',99, 8, 1, 'Turning Red - Gấu Đỏ Biến Hình" từ Disney và Pixar kể về Mei Lee, cô bé 13 tuổi tự tin và ngổ ngáo với những sự hỗn loạn của tuổi mới lớn. Mẹ của Mei luôn cố gắng bảo bọc và ở bên cạnh con gái mọi lúc mọi nơi, khiến cô bé cảm thấy như một thảm hoạ vậy. Và cứ như thể những thay đổi về sở thích, các mối quan hệ và thể chất còn chưa đủ, mỗi khi Mei trở nên quá phấn khích (mà thật ra lúc nào cũng vậy), "bùm", cô bé sẽ biến hình thành một chú gấu đỏ siêu cute khổng lồ luôn!'),
+('NGƯỜI NHỆN KHÔNG CÒN NHÀ','https://youtu.be/daHCu_jU5mQ','2022-05-15',149, 8, 1, 'Lần đầu tiên trong lịch sử điện ảnh của Người Nhện, thân phận người hàng xóm thân thiện bị lật mở, khiến trách nhiệm làm một Siêu Anh Hùng xung đột với cuộc sống bình thường và đặt người anh quan tâm nhất vào tình thế nguy hiểm. Khi anh nhờ đến giúp đỡ của Doctor Strange để khôi phục lại bí mật, phép thuật đã gây ra lỗ hổng thời không, giải phóng những ác nhân mạnh mẽ nhất từng đối đầu với Người Nhện từ mọi vũ trụ. Bây giờ, Peter sẽ phải vượt qua thử thách lớn nhất của mình, nó sẽ thay đổi không chỉ tương lai của chính anh mà còn là tương lai của cả Đa Vũ Trụ.'),
+('Batman: Vạch trần sự thật','https://youtu.be/ON39jkS9Soo','2022-05-16',183, 8, 1, 'Bộ phim đưa khán giả dõi theo hành trình phá án và diệt trừ tội phạm của chàng Hiệp sĩ Bóng đêm Batman, với một câu chuyện hoàn toàn khác biệt với những phần phim đã ra mắt trước đây. Thế giới ngầm ở thành phố Gotham xuất hiện một tên tội phạm kỳ lạ tên Riddler chuyên nhắm vào nhân vật tai to mặt lớn. Và sau mỗi lần phạm tội, hắn đều để lại một câu đố bí ẩn cho Batman. Khi bắt tay vào phá giải các câu đố này, Batman dần lật mở những bí ẩn động trời giữa gia đình anh và tên trùm tội phạm Carmine Falcon'),
+('MINIONS: SỰ TRỖI DẬY CỦA GRU','https://youtu.be/dTQXlDV16SY','2022-06-01',125, 9, 1, 'Hành trình phiêu lưu của #Gru song hành cùng với #Otto và viên đá của ác nhân MINIONS: SỰ TRỖI DẬY CỦA GRU - DCKC: 2021'),
+('TIẾNG “KÊU” CỨU LÚC NỬA ĐÊM','https://youtu.be/HM28wBN-5zc','2022-06-30',103, 8, 1, 'Kyeong-mi là một cô gái khiếm thính làm việc tại một tổng đài hỗ trợ người khiếm thính. Một đêm đi làm về muộn, cô tình cờ chứng kiến So Jung-eun, một cô gái trẻ bị đâm tàn bạo trên con đường vắng. Từ giây phút đó, Kyeong-mi trở thành mục tiêu mới của kẻ sát nhân hai mặt Do-sik. Do-sik điên cuồng rượt đuổi cô gái khiếm thính để bịt đầu mối. Kyeong-mi, với bất lợi không nghe được bất kỳ âm thanh nào xung quanh, trở thành con mồi đáng thương trong cuộc rượt đuổi nghẹt thở này. Giữa cô gái khiếm thính và tên sát nhân điên loạn, cuộc rượt đuổi sẽ kết thúc như thế nào?'),
+('Án Mạng Trên Sông Nile','https://youtu.be/_9Xoljxlqg8','2022-07-15',127, 8, 1, 'Án Mạng Trên Sông Nile xoay quanh chuyến đi tham quan Ai Cập của thám tử Poirot. Trên chiếc du thuyền nhỏ, ông bắt gặp một cặp nam thanh nữ tú: nàng triệu phú trẻ Linnet Doyle và người chồng mới cưới Simon Doyle đang hưởng tuần trăng mật. Chuyến đi hạnh phúc của hai người bị phá hỏng bởi người tình cũ của Simon - Jacqueline de Bellefort không ngừng bám theo phá đám.');
+
+
+DROP TABLE IF EXISTS `Image`;
+CREATE TABLE IF NOT EXISTS `Image` (
+  `img_id` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  `img_data` 	BLOB,
+  `img_url` 	TEXT NOT NULL,
+  `movie_id` 	INT UNSIGNED UNIQUE,
+  `account_id` 	INT UNSIGNED UNIQUE,
+  `cineplex_id` TINYINT UNSIGNED UNIQUE,
+    FOREIGN KEY (`account_id`)		REFERENCES 	`Account`(`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`movie_id`)		REFERENCES 	`Movie`(`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (`cineplex_id`)		REFERENCES 	`Cineplex`(`cineplex_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ;
+
+INSERT INTO `Image` (`img_url`,`account_id`,`cineplex_id`,`movie_id`) VALUES 
+('https://lichphimrap.com/storage/raps/bhd-cineplex.png',null,1,null),
+('https://banner2.cleanpng.com/20181203/orv/kisspng-cj-cgv-vietnam-cinema-cj-group-film-5c052597d5d118.5029003415438411758758.jpg',null,2,null),
+('https://cinestar.com.vn/pictures/400x400.png',null,3,null),
+('https://bhxhhaiphong.vn/cach-dat-ve-xem-phim-online-galaxy/imager_37828.jpg',null,4,null),
+('https://cdn.nhanlucnganhluat.vn/uploads/images/D69545BE/logo/2019-04/pictures_library_6235_20180102135750_4563.jpg',null,5,null),
+('https://static.wikia.nocookie.net/logos/images/4/46/MegaGS_Entertainmnt_logo_201x.png/revision/latest?cb=20201216085741&path-prefix=vi',null,6,null),
+('https://thegioidienanh.vn/stores/news_dataimages/anhvu/092021/06/11/3804_1._BY_phim_hanh_YYng_sieu_anh_hung_hoan_toan_mYi_Shang-Chi_va_huyYn_thoYi_ThYp_Luan_chinh_thYc_ra_mYt_vao_thang_9.jpg?rt=20210906113822',null,null, 1 ),
+('https://azreview.vn/wp-content/uploads/2022/02/phim-trang-roi-moonfall.jpg',null,null, 2 ),
+('https://upload.wikimedia.org/wikipedia/vi/thumb/1/1d/Ambulance2022poster.jpg/800px-Ambulance2022poster.jpg',null,null, 3 ),
+('https://media.ex-cdn.com/EXP/media.nongnghiep.vn/files/content/2022/03/26/phim-chieu-rap-nhung-ke-xau-xa-084735_183.jpg',null,null, 4 ),
+('https://www.cgv.vn/media/catalog/product/cache/1/image/1800x/71252117777b696995f01934522c402d/m/_/m_n_g_i_mi_n_t_y_-_official_poster_-_kc_25032022_1_.jpg',null,null, 5 ),
+('https://www.google.com/url?sa=i&url=https%3A%2F%2Fmoveek.com%2Fphim%2Fmorbius%2F&psig=AOvVaw0ZlifyjLJEX_18CsRWB2rm&ust=1649757312494000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCNixpYffi_cCFQAAAAAdAAAAABAU',null,null, 6 ),
+('https://moveek.com/storage/media/cache/short/624323c449135875913979.jpeg',null,null, 7 ),
+('https://moveek.com/storage/media/cache/large/621d9bd1a0f18432625529.jpg',null,null, 8 ),
+('https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/t/h/the_free_fall_-_payoff_poster-nkc_08042022_1_.jpg',null,null, 9 ),
+('https://www.cgv.vn/media/banner/cache/1/b58515f018eb873dafa430b6f9ae0c1e/s/o/sonic_980_x_448.jpg',null,null, 10 ),
+('https://i.ytimg.com/vi/WYrV5Npz3vo/maxresdefault.jpg',null,null, 11 ),
+('https://i.rada.vn/data/image/2022/04/05/Chickenhare-and-the-Hamster-of-Darkness-1.jpg',null,null, 12 ),
+('https://cuongphim.com/wp-content/uploads/2021/12/doctor-strange-2-xuat-hien-vai-dien-cameo-cuong-phim-2-cuong-phim.jpg',null,null, 13 ),
+('https://bloganchoi.com/wp-content/uploads/2022/03/gau-do-2.jpg',null,null, 14 ),
+('https://image.thanhnien.vn/1200x630/Uploaded/2022/tnabtw/2021_11_17/poster-3930.jpg',null,null, 15 ),
+('https://subnhanhtv.org/wp-content/uploads/2022/01/The-Batman-Batman-Movie-2022-poster.jpg',null,null, 16 ),
+('https://cinema2cinema.com/vi/wp-content/uploads/2020/08/Minions-2-Su-troi-day-cua-Gru-bi-hoan-lai.jpg',null,null, 17 ),
+('https://i.rada.vn/data/image/2022/04/07/tieng-keu-cuu-luc-nua-dem-700.jpg',null,null, 18 ),
+('https://bilutv.link/film/20001/big.jpg',null,null, 19 );
+
+
 
 DROP TABLE IF EXISTS `Schedule`;
 CREATE TABLE IF NOT EXISTS `Schedule` (
@@ -292,62 +331,58 @@ CREATE TABLE IF NOT EXISTS `Schedule` (
   `room_id` 		INT UNSIGNED NOT NULL,
   `schedule_date` 	DATE  NOT NULL,
   `schedule_start` 	TIME NOT NULL,
-	FOREIGN KEY (`room_id`)	REFERENCES 	`Room`(`room_id`),
-    FOREIGN KEY (`movie_id`)	REFERENCES 	`Movie`(`movie_id`)
+	FOREIGN KEY (`room_id`)		REFERENCES 	`Room`(`room_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`movie_id`)	REFERENCES 	`Movie`(`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
-
-
-
-
--- Select *, count(1) from room group by cinema_id;
 DROP TABLE IF EXISTS `Seat`;
 CREATE TABLE IF NOT EXISTS `Seat` (
   `seat_id` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   `seat_type` 		ENUM('VIP','Thường'),
   `room_id` 		INT UNSIGNED NOT NULL,
   `seat_number` 	TINYINT UNSIGNED NOT NULL,
-  `user_id` 		INT UNSIGNED DEFAULT NULL ,
+  `account_id` 		INT UNSIGNED DEFAULT NULL ,
   `seat_status` 	BOOLEAN DEFAULT 0,
-	FOREIGN KEY (`user_id`)	REFERENCES 	`User`(`user_id`),
-    FOREIGN KEY (`room_id`)	REFERENCES 	`Room`(`room_id`)
+	FOREIGN KEY (`account_id`)	REFERENCES 	`Account`(`account_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (`room_id`)		REFERENCES 	`Room`(`room_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 
 DROP TABLE IF EXISTS `Ticket`;
 CREATE TABLE IF NOT EXISTS `Ticket` (
-  `ticket_id` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-  `schedule_id` 	INT UNSIGNED NOT NULL,
-  `seat_id` 		INT UNSIGNED NOT NULL,
-  `movie_id` 		INT UNSIGNED NOT NULL,
-  `ticket_price` 	FLOAT UNSIGNED NOT NULL,
-    FOREIGN KEY (`schedule_id`)	REFERENCES 	`Schedule`(`schedule_id`),
-    FOREIGN KEY (`movie_id`)	REFERENCES 	`Movie`(`movie_id`),
-	FOREIGN KEY (`seat_id`)		REFERENCES 	`Seat`(`seat_id`)
+  `ticket_code` 	VARCHAR(50)  PRIMARY KEY ,
+  `schedule_id` 	INT UNSIGNED ,
+  `seat_id` 		INT UNSIGNED ,
+  `movie_id` 		INT UNSIGNED ,
+  `account_id`		INT UNSIGNED ,
+  `ticket_price`	INT UNSIGNED NOT NULL,
+    FOREIGN KEY (`schedule_id`)	REFERENCES 	`Schedule`(`schedule_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (`movie_id`)	REFERENCES 	`Movie`(`movie_id`)ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY (`seat_id`)		REFERENCES 	`Seat`(`seat_id`)ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY (`account_id`)		REFERENCES 	`Account`(`account_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ;
 
 DROP TABLE IF EXISTS `Bill`;
 CREATE TABLE IF NOT EXISTS `Bill` (
   `bill_id` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-  `ticket_id` 		INT UNSIGNED NOT NULL UNIQUE,
-  `user_id` 		INT UNSIGNED NOT NULL,
-  `total` 			FLOAT UNSIGNED NOT NULL,
-  `created_date` 	DATETIME DEFAULT now(),
-  -- có thể có mã code bill ở đây để xác nhận 
-	FOREIGN KEY (`user_id`)		REFERENCES 	`User`(`user_id`),
-    FOREIGN KEY (`ticket_id`)	REFERENCES 	`Ticket`(`ticket_id`)
+  `ticket_code` 	VARCHAR(50) NOT NULL,
+  `account_id` 		INT UNSIGNED NOT NULL,
+  `total` 			INT UNSIGNED NOT NULL,
+  `created_date` 	DATETIME DEFAULT NOW(),
+	FOREIGN KEY (`account_id`)		REFERENCES 	`Account`(`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`ticket_code`)	REFERENCES 	`Ticket`(`ticket_code`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ;
 
 SELECT * FROM Movie;
 SELECT * FROM Room;
+SELECT * FROM Image;
 SELECT * FROM `Schedule`;
-SELECT * FROM `User`;
+SELECT * FROM `Account`;
 SELECT * FROM Seat;
-SELECT * FROM Schedule;
 SELECT * FROM Cineplex;
 SELECT * FROM Ticket;
 SELECT * FROM Bill;
-SELECT * , count(1) FROM Cinema GROUP BY cineplex_id;
+SELECT * FROM Cinema;
 
 
 INSERT INTO `Schedule` (`movie_id`,`room_id`,`schedule_date`,`schedule_start`) VALUES

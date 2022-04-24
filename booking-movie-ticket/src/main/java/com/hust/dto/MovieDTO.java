@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MovieDTO extends RepresentationModel<MovieDTO> {
 	private int movieId;
-	
+
 	private String movieName;
 
 	private String movieDescription;
@@ -23,11 +23,9 @@ public class MovieDTO extends RepresentationModel<MovieDTO> {
 
 	private short movieLenght;
 
-	private String moviePoster;
+	private short movieEvaluate;
 
-	private short evaluate;
-
-	private boolean status;
+	private boolean movieMtatus;
 
 	private int moviePrice;
 
@@ -41,6 +39,17 @@ public class MovieDTO extends RepresentationModel<MovieDTO> {
 		private Date scheduleDate;
 
 		private Date scheduleStart;
+
+	}
+
+	private ImageDTO moviePoster;
+
+	@Data
+	@NoArgsConstructor
+	public static class ImageDTO {
+		private int imgId;
+
+		private String imgUrl;
 
 	}
 

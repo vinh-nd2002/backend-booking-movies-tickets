@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,25 +46,25 @@ public class Movie {
 	@ColumnDefault("NULL")
 	private short movieLenght;
 
-	@Column(name = "movie_poster", nullable = false)
-	private String moviePoster;
-
-	@Column(name = "evaluate")
+	@Column(name = "movie_evaluate")
 	@ColumnDefault("6")
-	private short evaluate;
+	private short movieEvaluate;
 
 	@Column(name = "movie_price")
 	@ColumnDefault("60000")
 	private int moviePrice;
 
-	@Column(name = "status")
+	@Column(name = "movie_status")
 	@ColumnDefault("0")
-	private boolean status;
+	private boolean movieMtatus;
 
-	@OneToMany(mappedBy = "ticketOfMovie")
-	private List<Ticket> tickets;
+//	@OneToMany(mappedBy = "ticketOfMovie")
+//	private List<Ticket> tickets;
 
-	@OneToMany(mappedBy = "scheduleOfMovie")
+	@OneToOne(mappedBy = "imgOfMovie")
+	private Image moviePoster;
+
+	@OneToMany(mappedBy = "schedulesOfMovie")
 	private List<Schedule> schedules;
 
 }
