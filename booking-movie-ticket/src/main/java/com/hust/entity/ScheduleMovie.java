@@ -15,36 +15,36 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "`Bill`", catalog = "booking_movie_ticket")
+@Table(name = "`ScheduleMovie`", catalog = "booking_movie_ticket")
 @Data
 @NoArgsConstructor
-public class Bill {
-
-	@Column(name = "bill_id")
+public class ScheduleMovie {
+	@Column(name = "schedule_movie_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int billId;
-
-	@OneToMany
-	@JoinColumn(name = "ticket_code")
-	private List<Ticket> billOfTickets;
+	private int scheduleMovieId;
 
 	@ManyToOne
-	@JoinColumn(name = "account_id")
-	private Account billsOfAccount;
+	@JoinColumn(name = "movie_id")
+	private Movie movie;
 
-	@Column(name = "total", nullable = false)
-	private int total;
+	@ManyToOne
+	@JoinColumn(name = "schedule_id")
+	private Schedule schedule;
 
-	@Column(name = "created_date", insertable = false, nullable = false, updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	@CreationTimestamp
-	private Date createdDate;
+	@ManyToOne
+	@JoinColumn(name = "room_id")
+	private Room room;
+
+	@OneToMany(mappedBy = "ticketsOfScheduleMovie")
+	private List<Ticket> tickets;
+
+	@Column(name = "schedule_date", nullable = false, updatable = false)
+	@Temporal(TemporalType.DATE)
+	private Date scheduleDate;
 
 }

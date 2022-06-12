@@ -1,9 +1,6 @@
 package com.hust.controller;
 
-import java.util.List;
-
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,34 +10,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hust.dto.RoomDTO;
-import com.hust.entity.Room;
-import com.hust.services.IRoomService;
+import com.hust.dto.ScheduleMovieDTO;
+import com.hust.entity.ScheduleMovie;
+
+import com.hust.services.IScheduleMovieService;
 
 @RestController
-@RequestMapping(value = "api/v1/rooms")
+@RequestMapping(value = "api/v1/schedulemovies")
 @CrossOrigin("*")
-public class RoomController {
+public class ScheduleMovieController {
 	@Autowired
-	private IRoomService iRoomService;
+	private IScheduleMovieService iScheduleMovieService;
 
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@GetMapping
-	public ResponseEntity<?> getAllRooms() {
-		List<Room> rooms = iRoomService.getAllRooms();
-
-		List<RoomDTO> dtos = modelMapper.map(rooms, new TypeToken<List<RoomDTO>>() {
-		}.getType());
-		return new ResponseEntity<>(dtos, HttpStatus.OK);
-	}
-
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> getRoomById(@PathVariable(name = "id") int id) {
-		Room room = iRoomService.getRoomById(id);
+	public ResponseEntity<?> getScheduleById(@PathVariable(name = "id") int id) {
+		ScheduleMovie scheduleDetail = iScheduleMovieService.getScheduleMovieById(id);
 
-		RoomDTO dto = modelMapper.map(room, RoomDTO.class);
+		ScheduleMovieDTO dto = modelMapper.map(scheduleDetail, ScheduleMovieDTO.class);
+
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
+
 }

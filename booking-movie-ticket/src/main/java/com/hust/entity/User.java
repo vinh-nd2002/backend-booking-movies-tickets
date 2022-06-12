@@ -1,7 +1,6 @@
 package com.hust.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -23,14 +21,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "`Account`", catalog = "booking_movie_ticket")
+@Table(name = "`User`", catalog = "booking_movie_ticket")
 @Data
 @NoArgsConstructor
-public class Account {
-	@Column(name = "account_id")
+public class User {
+	@Column(name = "user_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int accountId;
+	private int userId;
 
 	@Column(name = "username", length = 50, unique = true, updatable = false, nullable = false)
 	private String username;
@@ -70,13 +68,10 @@ public class Account {
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
 	private Date createdDate;
-	
-	@OneToMany(mappedBy = "billsOfAccount")
-	private List<Bill> bills;
 
-	@OneToOne(mappedBy = "imgOfAccount")
+	@OneToOne(mappedBy = "imgOfUser")
 	private Image avatar;
-	
+
 	public enum GenderType {
 		MALE, FEMALE
 	}

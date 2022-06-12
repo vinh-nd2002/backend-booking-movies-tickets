@@ -4,16 +4,18 @@ import java.util.Date;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.hust.entity.Account.GenderType;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.hust.entity.User.GenderType;
+import com.hust.entity.User.Role;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class AccountDTO extends RepresentationModel<AccountDTO> {
+public class UserDTO extends RepresentationModel<UserDTO> {
 
-	private int accountId;
+	private int userId;
 
 	private String username;
 
@@ -30,7 +32,10 @@ public class AccountDTO extends RepresentationModel<AccountDTO> {
 	private GenderType gender;
 
 	private String address;
+	
+	private Role role;
 
+	@JsonUnwrapped
 	private ImageDTO avatar;
 
 	@Data

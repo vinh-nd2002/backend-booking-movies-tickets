@@ -7,7 +7,9 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,7 @@ import com.hust.services.IMovieService;
 
 @RestController
 @RequestMapping(value = "/api/v1/movies")
+@CrossOrigin("*")
 public class MovieController {
 
 	@Autowired
@@ -33,5 +36,14 @@ public class MovieController {
 		}.getType());
 
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<?> getMovieById(@PathVariable(name = "id") int id) {
+		Movie movie = iMovieService.getMovieById(id);
+
+		MovieDTO dto = modelMapper.map(movie, MovieDTO.class);
+
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 }

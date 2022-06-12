@@ -7,11 +7,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ColumnDefault;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,20 +28,9 @@ public class Seat {
 	@Enumerated(EnumType.STRING)
 	private SeatType seatType;
 
+	
 	@Column(name = "seat_number", nullable = false)
 	private short seatNumber;
-
-	@Column(name = "seat_status", nullable = false)
-	@ColumnDefault("0")
-	private boolean seatStatus;
-
-	@ManyToOne
-	@JoinColumn(name = "room_id")
-	private Room seatsOfRoom;
-
-	@ManyToOne
-	@JoinColumn(name = "account_id")
-	private Account seatsOfAccount;
 
 	public enum SeatType {
 		VIP, Thường

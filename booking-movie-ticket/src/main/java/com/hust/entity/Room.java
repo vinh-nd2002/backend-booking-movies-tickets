@@ -32,10 +32,7 @@ public class Room {
 	@JoinColumn(name = "cinema_id")
 	private Cinema roomsOfCinema;
 
-	@OneToMany(mappedBy = "schedulesOfRoom")
-	private List<Schedule> schedules;
-
-	@OneToMany(mappedBy = "seatsOfRoom")
-	private List<Seat> seats;
+	@OneToMany(mappedBy = "room")
+	private List<ScheduleMovie> scheduleMovies;
 
 }

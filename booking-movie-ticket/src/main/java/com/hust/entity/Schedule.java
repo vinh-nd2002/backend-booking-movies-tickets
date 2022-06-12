@@ -1,14 +1,14 @@
 package com.hust.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,17 +26,8 @@ public class Schedule {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int scheduleId;
 
-	@ManyToOne
-	@JoinColumn(name = "movie_id")
-	private Movie schedulesOfMovie;
-
-	@ManyToOne
-	@JoinColumn(name = "room_id")
-	private Room schedulesOfRoom;
-
-	@Column(name = "schedule_date", nullable = false, updatable = false)
-	@Temporal(TemporalType.DATE)
-	private Date scheduleDate;
+	@OneToMany(mappedBy = "schedule")
+	private List<ScheduleMovie> scheduleMovies;
 
 	@Column(name = "schedule_start", nullable = false, updatable = false)
 	@Temporal(TemporalType.TIME)

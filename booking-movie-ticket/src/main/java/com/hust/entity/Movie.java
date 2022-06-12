@@ -56,15 +56,12 @@ public class Movie {
 
 	@Column(name = "movie_status")
 	@ColumnDefault("0")
-	private boolean movieMtatus;
-
-//	@OneToMany(mappedBy = "ticketOfMovie")
-//	private List<Ticket> tickets;
+	private boolean movieStatus;
 
 	@OneToOne(mappedBy = "imgOfMovie")
 	private Image moviePoster;
 
-	@OneToMany(mappedBy = "schedulesOfMovie")
-	private List<Schedule> schedules;
+	@OneToMany(mappedBy = "movie")
+	private List<ScheduleMovie> scheduleMovies;
 
 }

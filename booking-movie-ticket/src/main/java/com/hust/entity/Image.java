@@ -36,8 +36,8 @@ public class Image {
 	private Movie imgOfMovie;
 
 	@OneToOne
-	@JoinColumn(name = "account_id", referencedColumnName = "account_id")
-	private Account imgOfAccount;
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
+	private User imgOfUser;
 
 	@OneToOne
 	@JoinColumn(name = "cineplex_id", referencedColumnName = "cineplex_id")

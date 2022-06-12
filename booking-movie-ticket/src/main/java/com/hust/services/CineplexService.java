@@ -9,18 +9,18 @@ import com.hust.entity.Cineplex;
 import com.hust.repository.ICineplexRepository;
 
 @Service
-public class CineplexService implements ICineplexService{
+public class CineplexService implements ICineplexService {
 	@Autowired
 	private ICineplexRepository cineplexRepository;
 
 	@Override
-	public List<Cineplex> getAllCineplexs() {
-		return cineplexRepository.findAll();
+	public Cineplex getCineplexById(short id) {
+		return cineplexRepository.getById(id);
 	}
 
 	@Override
-	public Cineplex getCineplexById(short id) {
-		return cineplexRepository.getById(id);
+	public List<Cineplex> getAllCineplexs() {
+		return cineplexRepository.findAll();
 	}
 
 }

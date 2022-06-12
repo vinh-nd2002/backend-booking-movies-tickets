@@ -8,4 +8,6 @@ public interface IMovieService {
 
 	List<Movie> getAllMovies();
 
+	Movie getMovieById(int id);
+
 }

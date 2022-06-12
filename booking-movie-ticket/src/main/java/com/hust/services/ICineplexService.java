@@ -6,8 +6,8 @@ import com.hust.entity.Cineplex;
 
 public interface ICineplexService {
 
-	List<Cineplex> getAllCineplexs();
-
 	Cineplex getCineplexById(short id);
+
+	List<Cineplex> getAllCineplexs();
 
 }
