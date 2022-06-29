@@ -45,7 +45,6 @@ public class RoomDTO {
 			@Data
 			@NoArgsConstructor
 			static class ImageDTO {
-//				private short imgId;
 
 				private String imgUrl;
 			}

@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hust.dto.CinemaDTO;
+import com.hust.dto.MovieDTO;
 import com.hust.entity.Cinema;
+import com.hust.entity.Movie;
 import com.hust.services.ICinemaService;
 
 @RestController
@@ -35,14 +37,14 @@ public class CinemaController {
 	private ModelMapper modelMapper;
 
 	@GetMapping
-	public ResponseEntity<?> getAllCinemas(Pageable pageable) {
-		Page<Cinema> cinemas = iCinemaService.getAllCinemas(pageable);
+	public ResponseEntity<?> getAllCinemas() {
 
-		List<CinemaDTO> dtos = modelMapper.map(cinemas.getContent(), new TypeToken<List<CinemaDTO>>() {
+		List<Cinema> cinemas = iCinemaService.getAllCinemas();
+
+		List<MovieDTO> dtos = modelMapper.map(cinemas, new TypeToken<List<CinemaDTO>>() {
 		}.getType());
 
-		Page<CinemaDTO> dtoPages = new PageImpl<>(dtos, pageable, cinemas.getTotalElements());
-		return new ResponseEntity<>(dtoPages, HttpStatus.OK);
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/{id}")

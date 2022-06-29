@@ -12,13 +12,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.modelmapper.TypeToken;
 
 import com.hust.dto.CineplexDTO;
 import com.hust.entity.Cineplex;
+//import com.hust.form.update.CineplexForm;
 import com.hust.services.ICineplexService;
+
+//import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping(value = "api/v1/cineplexs")
@@ -61,4 +68,19 @@ public class CineplexController {
 
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
+
+	@PostMapping()
+	public ResponseEntity<String> createCineplex(@RequestParam(name = "imageForm") MultipartFile imageForm,
+			@RequestParam(name = "cineplexCode") String cineplexCode,
+			@RequestParam(name = "cineplexName") String cineplexName) throws Exception {
+		iCineplexService.createCineplex(imageForm, cineplexCode, cineplexName);
+
+		return new ResponseEntity<>(" Create Success", HttpStatus.OK);
+	}
+
+//	@PutMapping(value = "/{id}")
+//	public ResponseEntity<String> updateCineplex(@RequestBody CineplexForm cineplexForm) {
+//		iCineplexService.updateCineplex(cineplexForm);
+//		return new ResponseEntity<>("Update Success", HttpStatus.OK);
+//	}
 }

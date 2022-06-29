@@ -1,7 +1,6 @@
 package com.hust.entity;
 
 import java.util.Date;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +14,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,7 +43,7 @@ public class Ticket {
 
 	@Column(name = "ticket_price", nullable = false)
 	private int ticketPrice;
-	
+
 	@Column(name = "created_date", insertable = false, nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp

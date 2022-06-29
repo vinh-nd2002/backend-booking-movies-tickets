@@ -3,12 +3,10 @@ package com.hust.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.hust.dto.BookingSeatSocketDTO;
 
@@ -34,14 +32,8 @@ public class BookingController {
 	@MessageMapping("/booking-seats")
 	public void bookingTickets(@Payload BookingTicketForm bookingTicketForm) {
 		bookingService.bookingTickets(bookingTicketForm);
-		BookingSeatSocketDTO temp = new BookingSeatSocketDTO();
-		for (BookingSeatSocketDTO bookingSeatSocketDTO : listSeatSocketDTOs) {
-			if (bookingSeatSocketDTO.getUsername().equals(bookingTicketForm.getUsername())
-					&& bookingSeatSocketDTO.getScheduleMovieId() == bookingTicketForm.getScheduleMovieId()) {
-				temp = bookingSeatSocketDTO;
-				break;
-			}
-		}
+		BookingSeatSocketDTO temp = listSeatSocketDTOs.stream()
+				.filter(item -> bookingTicketForm.getUsername().equals(item.getUsername())).findAny().orElse(null);
 		listSeatSocketDTOs.remove(temp);
 		simpMessagingTemplate.convertAndSend("/schedule-movie/" + bookingTicketForm.getScheduleMovieId(),
 				listSeatSocketDTOs);
@@ -50,7 +42,7 @@ public class BookingController {
 	// Đặt vé thành công
 	@MessageMapping("/booking-success")
 	public void bookingSuccess(@Payload int scheduleMovieId) {
-		simpMessagingTemplate.convertAndSend("/schedule-movie/" + scheduleMovieId, "success");
+		simpMessagingTemplate.convertAndSend("/schedule-movie/" + scheduleMovieId + "/success", "success");
 	}
 
 	// Load danh sách ghế ngồi đang được chọn
@@ -62,14 +54,8 @@ public class BookingController {
 					listSeatSocketDTOs);
 		}
 
-		BookingSeatSocketDTO temp = new BookingSeatSocketDTO();
-		for (BookingSeatSocketDTO bookingSeatSocketDTO : listSeatSocketDTOs) {
-			if (bookingSeatSocketDTO.getUsername().equals(seatFromClient.getUsername())
-					&& bookingSeatSocketDTO.getScheduleMovieId() == seatFromClient.getScheduleMovieId()) {
-				temp = bookingSeatSocketDTO;
-				break;
-			}
-		}
+		BookingSeatSocketDTO temp = listSeatSocketDTOs.stream()
+				.filter(item -> seatFromClient.getUsername().equals(item.getUsername())).findAny().orElse(null);
 		listSeatSocketDTOs.remove(temp);
 		if (seatFromClient.getSeats().isEmpty() == false) {
 			listSeatSocketDTOs.add(seatFromClient);
@@ -87,13 +73,10 @@ public class BookingController {
 	// Load lại danh sách ghế ngồi khi có ai đó thoát ra
 	@MessageMapping("/reset-seats")
 	public void resetSeats(@Payload BookingSeatSocketDTO seatFromClient) {
-		BookingSeatSocketDTO temp = new BookingSeatSocketDTO();
-		for (BookingSeatSocketDTO bookingSeatSocketDTO : listSeatSocketDTOs) {
-			if (bookingSeatSocketDTO.getUsername().equals(seatFromClient.getUsername())) {
-				temp = bookingSeatSocketDTO;
-				break;
-			}
-		}
+
+		BookingSeatSocketDTO temp = listSeatSocketDTOs.stream()
+				.filter(item -> seatFromClient.getUsername().equals(item.getUsername())).findAny().orElse(null);
+
 		listSeatSocketDTOs.remove(temp);
 		simpMessagingTemplate.convertAndSend("/schedule-movie/" + seatFromClient.getScheduleMovieId(),
 				listSeatSocketDTOs);

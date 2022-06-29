@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Cineplex {
-
 	@Column(name = "cineplex_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,4 +35,9 @@ public class Cineplex {
 
 	@OneToOne(mappedBy = "imgOfCineplex")
 	private Image cineplexLogo;
+
+	public Cineplex(String cineplexCode, String cineplexName) {
+		this.cineplexCode = cineplexCode;
+		this.cineplexName = cineplexName;
+	}
 }

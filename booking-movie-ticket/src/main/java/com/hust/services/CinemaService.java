@@ -1,8 +1,8 @@
 package com.hust.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.hust.entity.Cinema;
@@ -15,8 +15,8 @@ public class CinemaService implements ICinemaService {
 	private ICinemaRepository cinemaRepository;
 
 	@Override
-	public Page<Cinema> getAllCinemas(Pageable pageable) {
-		return cinemaRepository.findAll(pageable);
+	public List<Cinema> getAllCinemas() {
+		return cinemaRepository.findAll();
 	}
 
 	@Override

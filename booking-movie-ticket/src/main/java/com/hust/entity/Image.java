@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,14 +21,19 @@ public class Image {
 	@Column(name = "img_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private short imgId;
-
-	@Lob
-	@Column(name = "img_data")
-	private byte[] imgData;
+	private int imgId;
 
 	@Column(name = "img_url")
 	private String imgUrl;
+
+	@Column(name = "drive_file_id")
+	private String driveFileId;
+
+	@Column(name = "img_type")
+	private String imgType;
+
+	@Column(name = "img_name")
+	private String imgName;
 
 	@OneToOne
 	@JoinColumn(name = "movie_id", referencedColumnName = "movie_id")
@@ -42,4 +46,5 @@ public class Image {
 	@OneToOne
 	@JoinColumn(name = "cineplex_id", referencedColumnName = "cineplex_id")
 	private Cineplex imgOfCineplex;
+
 }

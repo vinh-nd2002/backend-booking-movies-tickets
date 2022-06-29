@@ -1,9 +1,9 @@
 DROP DATABASE IF EXISTS booking_movie_ticket;
-CREATE DATABASE IF NOT EXISTS booking_movie_ticket;
+CREATE DATABASE booking_movie_ticket;
 USE booking_movie_ticket;
 
-DROP TABLE IF EXISTS 	`User`;
-CREATE TABLE IF NOT EXISTS `User` ( 	
+DROP TABLE IF EXISTS `User`;
+CREATE TABLE  `User` ( 	
 	`user_id` 		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	`username`	 	CHAR(50) NOT NULL UNIQUE CHECK (LENGTH(`username`) >= 6 AND LENGTH(`username`) <= 50),
 	`email` 		CHAR(50) NOT NULL UNIQUE CHECK (LENGTH(`email`) >= 10 AND LENGTH(`email`) <= 50),
@@ -19,14 +19,14 @@ CREATE TABLE IF NOT EXISTS `User` (
 );
 
 DROP TABLE IF EXISTS 	`Cineplex`;
-CREATE TABLE IF NOT EXISTS `Cineplex` (
+CREATE TABLE`Cineplex` (
     `cineplex_id` 		TINYINT 	UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `cineplex_code`		CHAR(30) 	UNIQUE NOT NULL,
 	`cineplex_name` 	CHAR(50) 	UNIQUE NOT NULL
 );
 
 DROP TABLE IF EXISTS 	`Cinema`;
-CREATE TABLE IF NOT EXISTS `Cinema` (
+CREATE TABLE `Cinema` (
     `cinema_id` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `cinema_code` 		CHAR(50) UNIQUE NOT NULL,
 	`cinema_name` 		CHAR(50) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `Cinema` (
 );
 
 DROP TABLE IF EXISTS `Room`;
-CREATE TABLE IF NOT EXISTS `Room` (
+CREATE TABLE `Room` (
 	`room_id` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	`room_name` 	NVARCHAR(20) NOT NULL,
 	`cinema_id` 	INT UNSIGNED NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `Room` (
 );
 
 DROP TABLE IF EXISTS `Movie`;
-CREATE TABLE IF NOT EXISTS `Movie` (
+CREATE TABLE `Movie` (
   `movie_id` 			INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   `movie_name` 			NVARCHAR(100) NOT NULL UNIQUE,
   `movie_description` 	TEXT NOT NULL,
@@ -57,45 +57,47 @@ CREATE TABLE IF NOT EXISTS `Movie` (
 ) ;
  
 DROP TABLE IF EXISTS `Image`;
-CREATE TABLE IF NOT EXISTS `Image` (
-  `img_id` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-  `img_data` 	BLOB,
-  `img_url` 	TEXT NOT NULL,
-  `movie_id` 	INT UNSIGNED UNIQUE,
-  `user_id` 	INT UNSIGNED UNIQUE,
-  `cineplex_id` TINYINT UNSIGNED UNIQUE,
+CREATE TABLE `Image` (
+  `img_id` 			INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  `img_type` 		VARCHAR(20),
+  `drive_file_id` 	VARCHAR(50),
+  `img_name`		VARCHAR(200),
+  `img_url` 		TEXT NOT NULL,
+  `movie_id` 		INT UNSIGNED UNIQUE,
+  `user_id` 		INT UNSIGNED UNIQUE,
+  `cineplex_id` 	TINYINT UNSIGNED UNIQUE,
     FOREIGN KEY (`user_id`)		REFERENCES 	`User`(`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`movie_id`)		REFERENCES 	`Movie`(`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`cineplex_id`)		REFERENCES 	`Cineplex`(`cineplex_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 DROP TABLE IF EXISTS `Schedule`;
-CREATE TABLE IF NOT EXISTS `Schedule` (
+CREATE TABLE `Schedule` (
   `schedule_id` 	  INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   `schedule_start` 	TIME NOT NULL UNIQUE
 );
 
 DROP TABLE IF EXISTS `ScheduleMovie`;
-CREATE TABLE IF NOT EXISTS `ScheduleMovie` (
+CREATE TABLE `ScheduleMovie` (
   `schedule_movie_id` 	INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   `movie_id` 			INT UNSIGNED NOT NULL,
   `schedule_id` 		INT UNSIGNED NOT NULL,
   `room_id` 			INT UNSIGNED NOT NULL,
   `schedule_date` 		DATE  NOT NULL,
 	FOREIGN KEY (`room_id`)		REFERENCES 	`Room`(`room_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (`movie_id`)	REFERENCES 	`Movie`(`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (`schedule_id`)	REFERENCES 	`Schedule`(`schedule_id`) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (`movie_id`)	REFERENCES 	`Movie`(`movie_id`)  ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`schedule_id`)	REFERENCES 	`Schedule`(`schedule_id`) ON DELETE CASCADE ON UPDATE CASCADE 
 ) ;
 
 DROP TABLE IF EXISTS `Seat`;
-CREATE TABLE IF NOT EXISTS `Seat` (
+CREATE TABLE `Seat` (
   `seat_id` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   `seat_type` 		ENUM('VIP','Thường'),
   `seat_number` 	TINYINT UNSIGNED NOT NULL
 );
 
 DROP TABLE IF EXISTS `Ticket`;
-CREATE TABLE IF NOT EXISTS `Ticket` (
+CREATE TABLE `Ticket` (
   `ticket_code` 		INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
   `schedule_movie_id` 	INT UNSIGNED ,
   `seat_id` 			INT UNSIGNED ,
@@ -458,7 +460,7 @@ INSERT INTO `Movie` (`movie_name`,`movie_trailer`,`movie_release`,`movie_lenght`
 
 INSERT INTO `Image` (`img_url`,`user_id`,`cineplex_id`,`movie_id`) VALUES 
 ('https://img.jamja.vn/jamja-prod/gcs_full_5bb305eb76ec572092f79bc8-2018-10-02-054516.jpeg?cache=1',null,1,null),
-('https://play-lh.googleusercontent.com/9N7f8PWb1zlDqOR4mepkNFkRt5SlrjFoLsg5jYtVhvq9LeQneLKyHg9eEx4BSgyl7F4',null,2,null),
+('https://gigamall.com.vn/data/2019/05/06/11365490_logo-cgv-500x500.jpg',null,2,null),
 ('https://cinestar.com.vn/pictures/400x400.png',null,3,null),
 ('https://bhxhhaiphong.vn/cach-dat-ve-xem-phim-online-galaxy/imager_37828.jpg',null,4,null),
 ('https://cdn.nhanlucnganhluat.vn/uploads/images/D69545BE/logo/2019-04/pictures_library_6235_20180102135750_4563.jpg',null,5,null),
@@ -477,7 +479,7 @@ INSERT INTO `Image` (`img_url`,`user_id`,`cineplex_id`,`movie_id`) VALUES
 ('https://i.rada.vn/data/image/2022/04/05/Chickenhare-and-the-Hamster-of-Darkness-1.jpg',null,null, 12 ),
 ('https://cuongphim.com/wp-content/uploads/2021/12/doctor-strange-2-xuat-hien-vai-dien-cameo-cuong-phim-2-cuong-phim.jpg',null,null, 13 ),
 ('https://bloganchoi.com/wp-content/uploads/2022/03/gau-do-2.jpg',null,null, 14 ),
-('https://media.molistar.com/thumb_w/editors/2021/12/16/SNWH_Poster_680.jpg',null,null, 15 ),
+('https://thegioidienanh.vn/stores/news_dataimages/anhvu/112021/08/12/2028_05.jpg?rt=20211108122154',null,null, 15 ),
 ('https://i.rada.vn/data/image/2022/02/28/Batman-3.jpg',null,null, 16 ),
 ('https://cinema2cinema.com/vi/wp-content/uploads/2020/08/Minions-2-Su-troi-day-cua-Gru-bi-hoan-lai.jpg',null,null, 17 ),
 ('https://i.rada.vn/data/image/2022/04/07/tieng-keu-cuu-luc-nua-dem-700.jpg',null,null, 18 ),
@@ -3308,11 +3310,18 @@ INSERT INTO `ScheduleMovie` (`movie_id`,`schedule_id`,`room_id`,`schedule_date`)
 SELECT * FROM Movie;
 SELECT * FROM Room;
 SELECT * FROM Image;
-SELECT * FROM `ScheduleMovie`;
+SELECT * FROM `ScheduleMovie` where movie_id = 1 ; 
 SELECT * FROM `Schedule`;
 SELECT * FROM `User`;
 SELECT * FROM Seat;
 SELECT * FROM Cineplex;
 SELECT * FROM Ticket;
 SELECT * FROM Cinema;
+
+
+
+
+
+
+
 
