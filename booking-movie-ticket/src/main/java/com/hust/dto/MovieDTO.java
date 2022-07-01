@@ -24,7 +24,7 @@ public class MovieDTO extends RepresentationModel<MovieDTO> {
 
 	private Date movieRelease;
 
-	private short movieLenght;
+	private short movieLength;
 
 	private short movieEvaluate;
 
@@ -58,7 +58,7 @@ public class MovieDTO extends RepresentationModel<MovieDTO> {
 	@Data
 	@NoArgsConstructor
 	static class ImageDTO {
-//		private int imgId;
+		private int imgId;
 
 		@JsonProperty("moviePoster")
 		private String imgUrl;

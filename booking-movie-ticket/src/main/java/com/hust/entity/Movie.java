@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,7 +46,7 @@ public class Movie {
 
 	@Column(name = "movie_lenght")
 	@ColumnDefault("NULL")
-	private short movieLenght;
+	private short movieLength;
 
 	@Column(name = "movie_evaluate")
 	@ColumnDefault("6")
@@ -59,7 +60,7 @@ public class Movie {
 	@ColumnDefault("0")
 	private boolean movieStatus;
 
-	@OneToOne(mappedBy = "imgOfMovie",cascade = {CascadeType.ALL})
+	@OneToOne(mappedBy = "imgOfMovie",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Image moviePoster;
 
 	@OneToMany(mappedBy = "movie")

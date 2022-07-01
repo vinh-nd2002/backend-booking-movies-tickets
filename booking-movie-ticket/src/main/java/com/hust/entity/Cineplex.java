@@ -2,8 +2,10 @@ package com.hust.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +35,7 @@ public class Cineplex {
 	@OneToMany(mappedBy = "cinemasOfCineplex")
 	private List<Cinema> cinemas;
 
-	@OneToOne(mappedBy = "imgOfCineplex")
+	@OneToOne(mappedBy = "imgOfCineplex",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Image cineplexLogo;
 
 	public Cineplex(String cineplexCode, String cineplexName) {

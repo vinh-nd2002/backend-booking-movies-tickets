@@ -2,10 +2,12 @@ package com.hust.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -69,7 +71,7 @@ public class User {
 	@CreationTimestamp
 	private Date createdDate;
 
-	@OneToOne(mappedBy = "imgOfUser")
+	@OneToOne(mappedBy = "imgOfUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Image avatar;
 
 	public enum GenderType {

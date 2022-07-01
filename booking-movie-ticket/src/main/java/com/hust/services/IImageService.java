@@ -9,4 +9,8 @@ public interface IImageService {
 	Image convertFileToImage(String imgName) throws IOException, GeneralSecurityException;
 
 	void createImage(Image image);
+
+	Image getImageById(int imageId);
+
+	void deleteImage(int id);
 }

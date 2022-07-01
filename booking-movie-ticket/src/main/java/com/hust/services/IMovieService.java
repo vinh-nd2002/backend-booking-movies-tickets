@@ -19,4 +19,7 @@ public interface IMovieService {
 
 	void deleteMovieById(int id) throws Exception;
 
+	void updateMovie(MultipartFile imageForm, int movieId, String movieName, String movieDescription, String movieTrailer,
+			Date movieRelease, short movieLength, short movieEvaluate, int moviePrice, boolean movieStatus) throws Exception;
+
 }

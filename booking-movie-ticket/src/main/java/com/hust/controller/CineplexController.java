@@ -44,13 +44,17 @@ public class CineplexController {
 		List<CineplexDTO> dtos = modelMapper.map(cineplexs, new TypeToken<List<CineplexDTO>>() {
 		}.getType());
 
-		for (CineplexDTO dto : dtos) {
-			for (CineplexDTO.CinemaDTO cinemaDTO : dto.getCinemas()) {
-				cinemaDTO.add(
-						linkTo(methodOn(CinemaController.class).getCinemaById(cinemaDTO.getCinemaId())).withSelfRel());
-			}
-			dto.add(linkTo(methodOn(CineplexController.class).getCineplexById(dto.getCineplexId())).withSelfRel());
-		}
+//		for (CineplexDTO dto : dtos) {
+//			for (CineplexDTO.CinemaDTO cinemaDTO : dto.getCinemas()) {
+//				cinemaDTO.add(
+//						linkTo(methodOn(CinemaController.class).getCinemaById(cinemaDTO.getCinemaId())).withSelfRel());
+//			}
+//			dto.add(linkTo(methodOn(CineplexController.class).getCineplexById(dto.getCineplexId())).withSelfRel());
+//		}
+
+		dtos.stream().forEach(item -> {
+			item.add(linkTo(methodOn(CineplexController.class).getCineplexById(item.getCineplexId())).withSelfRel());
+		});
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 
@@ -60,10 +64,13 @@ public class CineplexController {
 
 		CineplexDTO dto = modelMapper.map(cineplex, CineplexDTO.class);
 
-		for (CineplexDTO.CinemaDTO cinemaDTO : dto.getCinemas()) {
-			cinemaDTO
-					.add(linkTo(methodOn(CinemaController.class).getCinemaById(cinemaDTO.getCinemaId())).withSelfRel());
-		}
+//		for (CineplexDTO.CinemaDTO cinemaDTO : dto.getCinemas()) {
+//			cinemaDTO
+//					.add(linkTo(methodOn(CinemaController.class).getCinemaById(cinemaDTO.getCinemaId())).withSelfRel());
+//		}
+		dto.getCinemas().stream().forEach(item -> {
+			item.add(linkTo(methodOn(CinemaController.class).getCinemaById(item.getCinemaId())).withSelfRel());
+		});
 		dto.add(linkTo(methodOn(CineplexController.class).getCineplexById(id)).withSelfRel());
 
 		return new ResponseEntity<>(dto, HttpStatus.OK);
