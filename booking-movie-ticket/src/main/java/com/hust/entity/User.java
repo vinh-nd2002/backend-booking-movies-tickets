@@ -1,5 +1,6 @@
 package com.hust.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -26,7 +27,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "`User`", catalog = "booking_movie_ticket")
 @Data
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	@Column(name = "user_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,6 +77,14 @@ public class User {
 
 	@OneToOne(mappedBy = "imgOfUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Image avatar;
+	
+	@Column(name = "is_active")
+	@ColumnDefault("0")
+	private boolean isActive;
+	
+	@Column(name = "blocked")
+	@ColumnDefault("0")
+	private boolean blocked;
 
 	public enum GenderType {
 		MALE, FEMALE

@@ -8,9 +8,6 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hust.dto.CinemaDTO;
 import com.hust.dto.MovieDTO;
 import com.hust.entity.Cinema;
-import com.hust.entity.Movie;
 import com.hust.services.ICinemaService;
 
 @RestController

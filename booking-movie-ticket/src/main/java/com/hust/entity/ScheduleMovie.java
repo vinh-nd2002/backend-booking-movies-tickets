@@ -1,5 +1,6 @@
 package com.hust.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "`ScheduleMovie`", catalog = "booking_movie_ticket")
 @Data
 @NoArgsConstructor
-public class ScheduleMovie {
+public class ScheduleMovie implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	@Column(name = "schedule_movie_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

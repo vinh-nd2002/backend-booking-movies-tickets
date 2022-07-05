@@ -43,9 +43,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		http.cors();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.authorizeRequests().antMatchers("/api/v1/login/**").permitAll()
-				.antMatchers("/api/v1/schedulemovies/**", "/api/v1/booking/**").authenticated()
-				.antMatchers("/api/v1/users/**").authenticated();
+		http.authorizeRequests()
+				.antMatchers("/api/v1/login/**").permitAll()
+//				.antMatchers("/api/v1/users/**").authenticated()
+//				.antMatchers("/api/v1/users/register").permitAll()
+				.antMatchers("/api/v1/schedulemovies/**", "/api/v1/booking/**").authenticated();
 		http.addFilter(customAuthenticationFilter);
 		http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
@@ -63,7 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		configuration.applyPermitDefaultValues();
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/ws", configuration);
-		source.registerCorsConfiguration("/api/**",configuration);
+		source.registerCorsConfiguration("/api/**", configuration);
 		return source;
 	}
 

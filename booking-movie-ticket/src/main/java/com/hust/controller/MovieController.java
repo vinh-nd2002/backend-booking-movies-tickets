@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hust.dto.CineplexDTO;
 import com.hust.dto.MovieDTO;
 import com.hust.entity.Movie;
 import com.hust.form.filter.MovieFilterForm;

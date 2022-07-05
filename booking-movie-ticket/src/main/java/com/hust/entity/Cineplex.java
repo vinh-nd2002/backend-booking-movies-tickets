@@ -1,5 +1,6 @@
 package com.hust.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "`Cineplex`", catalog = "booking_movie_ticket")
 @Data
 @NoArgsConstructor
-public class Cineplex {
+public class Cineplex implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	@Column(name = "cineplex_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +39,7 @@ public class Cineplex {
 	@OneToMany(mappedBy = "cinemasOfCineplex")
 	private List<Cinema> cinemas;
 
-	@OneToOne(mappedBy = "imgOfCineplex",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "imgOfCineplex", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Image cineplexLogo;
 
 	public Cineplex(String cineplexCode, String cineplexName) {

@@ -1,5 +1,7 @@
 package com.hust.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,7 +18,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "`Seat`", catalog = "booking_movie_ticket")
 @Data
 @NoArgsConstructor
-public class Seat {
+public class Seat implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	@Column(name = "seat_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

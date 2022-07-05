@@ -11,11 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hust.dto.UserDTO;
 import com.hust.entity.User;
+import com.hust.form.create.UserForm;
 import com.hust.services.IUserService;
 
 import java.util.List;
@@ -25,14 +29,14 @@ import java.util.List;
 @CrossOrigin("*")
 public class UserController {
 	@Autowired
-	private IUserService iUserService;
+	private IUserService userService;
 
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@GetMapping()
 	public ResponseEntity<?> getAllUsers(Pageable pageable) {
-		Page<User> users = iUserService.getAllUsers(pageable);
+		Page<User> users = userService.getAllUsers(pageable);
 
 		List<UserDTO> dtos = modelMapper.map(users.getContent(), new TypeToken<List<UserDTO>>() {
 		}.getType());
@@ -43,10 +47,27 @@ public class UserController {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> getUserById(@PathVariable(name = "id") int id) {
-		User user = iUserService.getUserById(id);
+		User user = userService.getUserById(id);
 
 		UserDTO dto = modelMapper.map(user, UserDTO.class);
 
 		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+
+	@PostMapping()
+	public ResponseEntity<?> createUser(@RequestBody UserForm form) {
+		userService.createUser(form);
+
+		return new ResponseEntity<>("We have sent an email. Please check email to active account!", HttpStatus.OK);
+
+	}
+
+	@GetMapping("/active-user")
+	// validate: check exists, check not expired
+	public ResponseEntity<?> activeUserViaEmail(@RequestParam String token) {
+		// active user
+		userService.activeUser(token);
+
+		return new ResponseEntity<>("Active success!", HttpStatus.OK);
 	}
 }

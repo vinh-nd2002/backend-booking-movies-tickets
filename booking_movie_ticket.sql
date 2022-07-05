@@ -15,7 +15,27 @@ CREATE TABLE  `User` (
     `gender` 		ENUM ('MALE','FEMALE') NOT NULL,
     `address` 		NVARCHAR(100) NOT NULL,
     `role` 			ENUM('CUSTOMER','ADMIN') DEFAULT 'CUSTOMER',
-    `created_date` 	DATETIME DEFAULT NOW()
+    `created_date` 	DATETIME DEFAULT NOW(),
+    `is_active`		BOOLEAN DEFAULT FALSE,
+	`blocked`		BOOLEAN DEFAULT FALSE
+);
+
+-- Create table Registration_User_Token
+DROP TABLE IF EXISTS 	`RegistrationUserToken`;
+CREATE TABLE  `RegistrationUserToken` ( 	
+	`id` 			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	`token`	 		CHAR(36) NOT NULL UNIQUE,
+	`user_id` 		INT UNSIGNED NOT NULL,
+	`expiryDate` 	DATETIME NOT NULL
+);
+
+-- Create table Reset_Password_Token
+DROP TABLE IF EXISTS 	`ResetPasswordToken`;
+CREATE TABLE  `ResetPasswordToken` ( 	
+	`id` 			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	`token`	 		CHAR(36) NOT NULL UNIQUE,
+	`user_id` 		INT UNSIGNED NOT NULL,
+	`expiryDate` 	DATETIME NOT NULL
 );
 
 DROP TABLE IF EXISTS 	`Cineplex`;
@@ -109,21 +129,21 @@ CREATE TABLE `Ticket` (
 	FOREIGN KEY (`user_id`)		REFERENCES 	`User`(`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-INSERT INTO `User` 	(`username`,			`email`,					`number_phone`,					`password`,														`first_name`,	`last_name`, 	`date_of_birth`,	`gender`, 	`address`,			`role`	)
-VALUE				('hanh.havan@vti',		'hanhhanoi1999@gmail.com',	'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Hà'	,		'Văn Hanh',	 	'1997-05-05',		'MALE', 	'Nghệ An',			'CUSTOMER' 	), 
-					('thanhhung12@vti',		'hung122112@gmail.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thanh Hưng',	'2002-01-01',		'MALE', 	'Nghệ An',			'CUSTOMER' 	), 
-					('can.tuananh@vti',		'cananh.tuan12@vti.com',	'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Cấn'	,		'Tuấn Anh',		'2001-01-01',		'MALE', 	'Hà Nội',			'CUSTOMER' 	), 
-					('toananh123@vti',		'toananh123@vti.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Anh Toàn',		'1996-01-01',		'MALE', 	'TP. Hồ Chí Minh',	'CUSTOMER' 	), 
-					('manhhung123@vti',		'manhhung123@vti.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Mạnh Hùng',	'1994-01-01',		'MALE', 	'Thanh Hóa',		'ADMIN' 	 	),
-					('maianhvti123',		'maianhng@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Mai Anh',		'1982-01-01',		'MALE', 	'Nghệ An',			'CUSTOMER'	 	),
-					('tuanvti12344',		'tuan1234@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Văn Tuấn',		'1995-01-01',		'MALE', 	'Đà Nẵng',			'CUSTOMER'	 	),
-					('ngthuy123',			'thuyhanoi@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thị Thủy',		'1977-02-01',		'MALE', 	'Thừa Thiên Huế',	'CUSTOMER'	 	),
-					('quanganhvti',			'quanganh@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Quang Anh',	'1981-01-01',		'MALE', 	'Nghệ An',			'ADMIN' 	 	),
-					('hoanghungvti',	    'hunghoang@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Vũ'	,		'Hoàng Hưng',	'1997-01-01',		'MALE',		'Hà Nội',			'CUSTOMER'	 	),
-					('vananhvti',			'vananhb1@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Vân Anh',		'1997-01-01',		'MALE', 	'Hải Phòng',		'CUSTOMER'	 	),
-					('mailanvti',			'mailan123@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thị Trinh',	'1997-01-01',		'MALE', 	'Nghệ An',			'ADMIN' 	 	),
-					('tuanhungvti',			'tuanhung@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Vũ'	,		'Tuấn Hưng',	'1997-01-01',		'MALE', 	'Hải Phòng',		'CUSTOMER'	 	),
-					('xuanmaivti',			'xuanmai12@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Xuân Mai',		'1997-01-01',		'MALE', 	'Nghệ An',			'CUSTOMER'	 	);
+INSERT INTO `User` 	(`username`,			`email`,					`number_phone`,					`password`,														`first_name`,	`last_name`, 	`date_of_birth`,	`gender`, 	`address`,			`role`			,`is_active`)
+VALUE				('hanh.havan@vti',		'hanhhanoi1999@gmail.com',	'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Hà'	,		'Văn Hanh',	 	'1997-05-05',		'MALE', 	'Nghệ An',			'CUSTOMER' 		,true), 
+					('thanhhung12@vti',		'hung122112@gmail.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thanh Hưng',	'2002-01-01',		'MALE', 	'Nghệ An',			'CUSTOMER' 		,true), 
+					('can.tuananh@vti',		'cananh.tuan12@vti.com',	'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Cấn'	,		'Tuấn Anh',		'2001-01-01',		'MALE', 	'Hà Nội',			'CUSTOMER' 		,true), 
+					('toananh123@vti',		'toananh123@vti.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Anh Toàn',		'1996-01-01',		'MALE', 	'TP. Hồ Chí Minh',	'CUSTOMER' 		,true), 
+					('manhhung123@vti',		'manhhung123@vti.com',		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Mạnh Hùng',	'1994-01-01',		'MALE', 	'Thanh Hóa',		'ADMIN' 	 	,true),
+					('maianhvti123',		'maianhng@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Mai Anh',		'1982-01-01',		'MALE', 	'Nghệ An',			'CUSTOMER'	 	,true),
+					('tuanvti12344',		'tuan1234@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Văn Tuấn',		'1995-01-01',		'MALE', 	'Đà Nẵng',			'CUSTOMER'	 	,true),
+					('ngthuy123',			'thuyhanoi@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thị Thủy',		'1977-02-01',		'MALE', 	'Thừa Thiên Huế',	'CUSTOMER'	 	,true),
+					('quanganhvti',			'quanganh@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Quang Anh',	'1981-01-01',		'MALE', 	'Nghệ An',			'ADMIN' 	 	,true),
+					('hoanghungvti',	    'hunghoang@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Vũ'	,		'Hoàng Hưng',	'1997-01-01',		'MALE',		'Hà Nội',			'CUSTOMER'	 	,true),
+					('vananhvti',			'vananhb1@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Vân Anh',		'1997-01-01',		'MALE', 	'Hải Phòng',		'CUSTOMER'	 	,true),
+					('mailanvti',			'mailan123@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thị Trinh',	'1997-01-01',		'MALE', 	'Nghệ An',			'ADMIN' 	 	,true),
+					('tuanhungvti',			'tuanhung@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Vũ'	,		'Tuấn Hưng',	'1997-01-01',		'MALE', 	'Hải Phòng',		'CUSTOMER'	 	,true),
+					('xuanmaivti',			'xuanmai12@gmail.com', 		'0123456789',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Xuân Mai',		'1997-01-01',		'MALE', 	'Nghệ An',			'CUSTOMER'	 	,true);
 
 
 INSERT INTO `Cineplex` 	(`cineplex_code` ,	`cineplex_name` 	) 
@@ -5161,6 +5181,9 @@ INSERT INTO `ScheduleMovie` (`movie_id`,`schedule_id`,`room_id`,`schedule_date`)
  	(71, 78, 2,90000),
  	(71, 10, 5,60000);
 
+SELECT * FROM `User`;
+SELECT * FROM `RegistrationUserToken`;
+SELECT * FROM `ResetPasswordToken`;
 SELECT * FROM Movie;
 SELECT * FROM Room;
 SELECT * FROM Image;
