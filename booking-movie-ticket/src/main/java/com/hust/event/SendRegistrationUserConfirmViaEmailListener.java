@@ -20,7 +20,7 @@ public class SendRegistrationUserConfirmViaEmailListener
 	}
 
 	private void sendConfirmViaEmail(String email) {
-		
+
 		// send email
 		emailService.sendRegistrationUserConfirm(email);
 	}

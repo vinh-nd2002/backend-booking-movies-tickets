@@ -5197,6 +5197,8 @@ SELECT * FROM Cinema;
 
 delete from movie where movie_id = 20;
 delete from Image where img_id = 27;
+delete from `user` where user_id = 1;
+delete from `ResetPasswordToken` where id = 1;
 
 
 

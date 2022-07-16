@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Column(name = "user_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +66,6 @@ public class User implements Serializable {
 	private String address;
 
 	@Column(name = "role", nullable = false)
-	@ColumnDefault("Customer")
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
@@ -77,11 +76,11 @@ public class User implements Serializable {
 
 	@OneToOne(mappedBy = "imgOfUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Image avatar;
-	
+
 	@Column(name = "is_active")
 	@ColumnDefault("0")
 	private boolean isActive;
-	
+
 	@Column(name = "blocked")
 	@ColumnDefault("0")
 	private boolean blocked;

@@ -19,7 +19,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "`Reset_Password_Token`")
+@Table(name = "`ResetPasswordToken`", catalog = "booking_movie_ticket")
 @Data
 @NoArgsConstructor
 public class ResetPasswordToken implements Serializable {

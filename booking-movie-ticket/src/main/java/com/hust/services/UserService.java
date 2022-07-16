@@ -17,7 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hust.entity.RegistrationUserToken;
+import com.hust.entity.ResetPasswordToken;
 import com.hust.entity.User;
+import com.hust.entity.User.Role;
+import com.hust.event.OnResetPasswordViaEmailEvent;
 import com.hust.event.OnSendRegistrationUserConfirmViaEmailEvent;
 import com.hust.form.create.UserForm;
 import com.hust.repository.IRegistrationUserTokenRepository;
@@ -58,7 +61,7 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User findAccountByUsername(String username) {
+	public User findUserByUsername(String username) {
 		return repository.findByUsername(username);
 	}
 
@@ -101,6 +104,8 @@ public class UserService implements IUserService {
 		// encode password
 		user.setPassword((passwordEncoder.encode(user.getPassword())));
 
+		// set role
+		user.setRole(Role.CUSTOMER);
 		// create user
 		repository.save(user);
 
@@ -112,7 +117,8 @@ public class UserService implements IUserService {
 		sendConfirmUserRegistrationViaEmail(user.getEmail());
 	}
 
-	private void sendConfirmUserRegistrationViaEmail(String email) {
+	@Override
+	public void sendConfirmUserRegistrationViaEmail(String email) {
 		eventPublisher.publishEvent(new OnSendRegistrationUserConfirmViaEmailEvent(email));
 	}
 
@@ -124,12 +130,13 @@ public class UserService implements IUserService {
 		// create new user register token
 		RegistrationUserToken userRegisterToken = new RegistrationUserToken(newToken, user);
 
+		// save user registration
 		registrationUserTokenRepository.save(userRegisterToken);
 
 	}
 
 	@Override
-	public User findAccountByEmail(String email) {
+	public User findUserByEmail(String email) {
 		return repository.findByEmail(email);
 	}
 
@@ -141,9 +148,61 @@ public class UserService implements IUserService {
 		// active user
 		user.setActive(true);
 		repository.save(user);
-		
+
 		// remove user_token_confirm after active account success
 		registrationUserTokenRepository.delete(registrationUserToken);
+	}
+
+	@Override
+	public void resetPasswordViaEmail(String email) {
+		// find user by email
+		User user = repository.findByEmail(email);
+
+		// remove token reset password if exists
+
+		resetPasswordTokenRepository.deleteByUserId(user.getUserId());
+
+		// create new reset password token
+		createNewResetPasswordToken(user);
+
+		// send email
+		sendResetPasswordViaEmail(email);
+
+	}
+
+	@Override
+	public void sendResetPasswordViaEmail(String email) {
+		eventPublisher.publishEvent(new OnResetPasswordViaEmailEvent(email));
+
+	}
+
+	private void createNewResetPasswordToken(User user) {
+
+		// create new token for reset password
+		final String newToken = UUID.randomUUID().toString();
+
+		// create new reset password token
+		ResetPasswordToken resetPasswordToken = new ResetPasswordToken(newToken, user);
+
+		resetPasswordTokenRepository.save(resetPasswordToken);
+	}
+
+	@Override
+	public void resetPassword(String token, String newPassword) {
+		// get reset password token
+		ResetPasswordToken resetPasswordToken = resetPasswordTokenRepository.findByToken(token);
+
+		// find user
+		User user = repository.getById(resetPasswordToken.getUser().getUserId());
+
+		// update password
+		user.setPassword(passwordEncoder.encode(newPassword));
+
+		// save
+		repository.save(user);
+
+		// remove reset password token
+		resetPasswordTokenRepository.delete(resetPasswordToken);
 	}
 
 }

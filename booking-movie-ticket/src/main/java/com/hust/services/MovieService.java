@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hust.entity.Image;
 import com.hust.entity.Movie;
 import com.hust.form.filter.MovieFilterForm;
-import com.hust.repository.IImageRepository;
 import com.hust.repository.IMovieRepository;
 import com.hust.spectification.movie.MovieSpectificationBuilder;
 
@@ -29,9 +27,6 @@ public class MovieService implements IMovieService {
 
 	@Autowired
 	private IGoogleDriveFile googleDriveFile;
-
-	@Autowired
-	private IImageRepository imageRepository;
 
 	@Override
 	public List<Movie> getAllMovies(String search, MovieFilterForm filterForm) {

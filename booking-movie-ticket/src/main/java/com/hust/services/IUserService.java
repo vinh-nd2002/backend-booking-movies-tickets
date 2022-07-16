@@ -9,9 +9,9 @@ import com.hust.form.create.UserForm;
 
 public interface IUserService extends UserDetailsService {
 
-	User findAccountByUsername(String username);
+	User findUserByUsername(String username);
 
-	User findAccountByEmail(String email);
+	User findUserByEmail(String email);
 
 	Page<User> getAllUsers(Pageable pageable);
 
@@ -24,5 +24,13 @@ public interface IUserService extends UserDetailsService {
 	void createUser(UserForm form);
 
 	void activeUser(String token);
+
+	void sendConfirmUserRegistrationViaEmail(String email);
+
+	void resetPasswordViaEmail(String email);
+
+	void sendResetPasswordViaEmail(String email);
+
+	void resetPassword(String token, String newPassword);
 
 }

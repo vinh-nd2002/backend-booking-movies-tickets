@@ -2,14 +2,14 @@ package com.hust.event;
 
 import org.springframework.context.ApplicationEvent;
 
-// Khai báo sự kiện confirm user
-public class OnSendRegistrationUserConfirmViaEmailEvent extends ApplicationEvent {
+// Khai báo sự kiện reset password
+public class OnResetPasswordViaEmailEvent extends ApplicationEvent {
 
 	private static final long serialVersionUID = 1L;
 
 	private String email;
 
-	public OnSendRegistrationUserConfirmViaEmailEvent(String email) {
+	public OnResetPasswordViaEmailEvent(String email) {
 		super(email);
 		this.email = email;
 	}
