@@ -1,10 +1,7 @@
 package com.hust.dto;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.hust.entity.User.GenderType;
+
 import com.hust.entity.User.Role;
 
 import lombok.Data;
@@ -25,13 +22,6 @@ public class UserLoginDTO {
 	private String firstName;
 
 	private String lastName;
-
-	@JsonFormat(pattern = "YYYY-MM-dd")
-	private Date dateOfBirth;
-
-	private GenderType gender;
-
-	private String address;
 
 	private Role role;
 

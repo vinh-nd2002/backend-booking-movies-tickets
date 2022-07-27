@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,11 +28,14 @@ import lombok.NoArgsConstructor;
 public class Ticket implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Column(name = "ticket_code")
+
+	@Column(name = "ticket_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int ticketCode;
+	private int ticketId;
+
+	@Column(name = "ticket_code", length = 10, unique = true, nullable = false)
+	private String ticketCode;
 
 	@ManyToOne
 	@JoinColumn(name = "schedule_movie_id")
@@ -47,8 +52,16 @@ public class Ticket implements Serializable {
 	@Column(name = "ticket_price", nullable = false)
 	private int ticketPrice;
 
+	@Column(name = "status", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Status ticketStatus = Status.PENDING;
+
 	@Column(name = "created_date", insertable = false, nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
 	private Date createdDate;
+
+	public enum Status {
+		PENDING, ACCEPT
+	}
 }

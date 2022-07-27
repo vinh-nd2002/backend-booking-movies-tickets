@@ -34,9 +34,10 @@ public class CinemaController {
 
 	@GetMapping
 	public ResponseEntity<?> getAllCinemas() {
-
+		// get all entities
 		List<Cinema> cinemas = iCinemaService.getAllCinemas();
 
+		// convert to dtos
 		List<MovieDTO> dtos = modelMapper.map(cinemas, new TypeToken<List<CinemaDTO>>() {
 		}.getType());
 
@@ -45,10 +46,14 @@ public class CinemaController {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> getCinemaById(@PathVariable(name = "id") int id) {
+		// get entity
 		Cinema cinema = iCinemaService.getCinemaById(id);
 
+		// convert to dto
 		CinemaDTO dto = modelMapper.map(cinema, CinemaDTO.class);
+
 		dto.add(linkTo(methodOn(CinemaController.class).getCinemaById(id)).withSelfRel());
+
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 }

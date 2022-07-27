@@ -18,14 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hust.dto.ScheduleMovieDTO;
 import com.hust.entity.ScheduleMovie;
+import com.hust.services.IBookingService;
 import com.hust.services.IScheduleMovieService;
 
 @RestController
-@RequestMapping(value = "api/v1/schedulemovies")
+@RequestMapping(value = "api/v1/schedule-movies")
 @CrossOrigin("*")
 public class ScheduleMovieController {
 	@Autowired
 	private IScheduleMovieService iScheduleMovieService;
+
+	@Autowired
+	private IBookingService bookingService;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -45,6 +49,15 @@ public class ScheduleMovieController {
 			@RequestParam(name = "scheduleDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date scheduleDate) {
 		iScheduleMovieService.createScheduleMoive(movieId, roomId, scheduleId, scheduleDate);
 		return new ResponseEntity<>("Create successfully!", HttpStatus.CREATED);
+	}
+
+	@GetMapping("/success-ticket-booking")
+	public ResponseEntity<?> sendMailBookingTicketSuccessViaEmail(
+			@RequestParam(name = "scheduleMovieId") int scheduleMovieId, @RequestParam(name = "email") String email) {
+		// send mail
+		bookingService.sendSuccessfulTicketBookingViaEmail(email, scheduleMovieId);
+
+		return new ResponseEntity<>("Send mail success!", HttpStatus.OK);
 	}
 
 }

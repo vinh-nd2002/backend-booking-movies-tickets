@@ -2,6 +2,11 @@ package com.hust.event;
 
 import org.springframework.context.ApplicationEvent;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 // Khai báo sự kiện confirm user
 public class OnSendRegistrationUserConfirmViaEmailEvent extends ApplicationEvent {
 
@@ -11,14 +16,6 @@ public class OnSendRegistrationUserConfirmViaEmailEvent extends ApplicationEvent
 
 	public OnSendRegistrationUserConfirmViaEmailEvent(String email) {
 		super(email);
-		this.email = email;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
 		this.email = email;
 	}
 

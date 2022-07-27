@@ -2,6 +2,11 @@ package com.hust.event;
 
 import org.springframework.context.ApplicationEvent;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 // Khai báo sự kiện reset password
 public class OnResetPasswordViaEmailEvent extends ApplicationEvent {
 
@@ -11,14 +16,6 @@ public class OnResetPasswordViaEmailEvent extends ApplicationEvent {
 
 	public OnResetPasswordViaEmailEvent(String email) {
 		super(email);
-		this.email = email;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
 		this.email = email;
 	}
 

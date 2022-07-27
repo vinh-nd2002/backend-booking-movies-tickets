@@ -47,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/v1/login/**").permitAll()
 //				.antMatchers("/api/v1/users/**").authenticated()
 //				.antMatchers("/api/v1/users/register").permitAll()
-				.antMatchers("/api/v1/schedulemovies/**", "/api/v1/booking/**").authenticated();
+				.antMatchers("/api/v1/schedulemovies/**", "/api/v1/booking/**","api/v1/tickets/**").authenticated();
 		http.addFilter(customAuthenticationFilter);
 		http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

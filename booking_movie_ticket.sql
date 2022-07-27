@@ -4,38 +4,38 @@ USE booking_movie_ticket;
 
 DROP TABLE IF EXISTS `User`;
 CREATE TABLE  `User` ( 	
-	`user_id` 		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	`username`	 	CHAR(50) NOT NULL UNIQUE CHECK (LENGTH(`username`) >= 6 AND LENGTH(`username`) <= 50),
-	`email` 		CHAR(50) NOT NULL UNIQUE CHECK (LENGTH(`email`) >= 10 AND LENGTH(`email`) <= 50),
-    `number_phone` 	CHAR(10) NOT NULL ,
-	`password` 		VARCHAR(800) NOT NULL,
-    `first_name` 	NVARCHAR(30) NOT NULL,
-	`last_name` 	NVARCHAR(30) NOT NULL,
-    `date_of_birth` DATE NOT NULL,
-    `gender` 		ENUM ('MALE','FEMALE') NOT NULL,
-    `address` 		NVARCHAR(100) NOT NULL,
-    `role` 			ENUM('CUSTOMER','ADMIN') DEFAULT 'CUSTOMER',
-    `created_date` 	DATETIME DEFAULT NOW(),
-    `is_active`		BOOLEAN DEFAULT FALSE,
-	`blocked`		BOOLEAN DEFAULT FALSE
+	`user_id` 			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	`username`	 		CHAR(50) NOT NULL UNIQUE CHECK (LENGTH(`username`) >= 6 AND LENGTH(`username`) <= 50),
+	`email` 			CHAR(50) NOT NULL UNIQUE CHECK (LENGTH(`email`) >= 10 AND LENGTH(`email`) <= 50),
+    `number_phone` 		CHAR(10) NOT NULL ,
+	`password` 			VARCHAR(800) NOT NULL,
+    `first_name` 		NVARCHAR(30) NOT NULL,
+	`last_name` 		NVARCHAR(30) NOT NULL,
+    `date_of_birth` 	DATE NOT NULL,
+    `gender` 			ENUM ('MALE','FEMALE') NOT NULL,
+    `address` 			NVARCHAR(100) NOT NULL,
+    `role` 				ENUM('CUSTOMER','ADMIN') DEFAULT 'CUSTOMER',
+    `created_date` 		DATETIME DEFAULT NOW(),
+    `is_active`			BOOLEAN DEFAULT FALSE,
+	`blocked`			BOOLEAN DEFAULT FALSE
 );
 
 -- Create table Registration_User_Token
 DROP TABLE IF EXISTS 	`RegistrationUserToken`;
 CREATE TABLE  `RegistrationUserToken` ( 	
-	`id` 			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	`token`	 		CHAR(36) NOT NULL UNIQUE,
-	`user_id` 		INT UNSIGNED NOT NULL,
-	`expiryDate` 	DATETIME NOT NULL
+	`id` 				INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	`token`	 			CHAR(36) NOT NULL UNIQUE,
+	`user_id` 			INT UNSIGNED NOT NULL,
+	`expiryDate` 		DATETIME DEFAULT NOW()
 );
 
 -- Create table Reset_Password_Token
 DROP TABLE IF EXISTS 	`ResetPasswordToken`;
 CREATE TABLE  `ResetPasswordToken` ( 	
-	`id` 			INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	`token`	 		CHAR(36) NOT NULL UNIQUE,
-	`user_id` 		INT UNSIGNED NOT NULL,
-	`expiryDate` 	DATETIME NOT NULL
+	`id` 				INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	`token`	 			CHAR(36) NOT NULL UNIQUE,
+	`user_id` 			INT UNSIGNED NOT NULL,
+	`expiryDate` 		DATETIME DEFAULT NOW()
 );
 
 DROP TABLE IF EXISTS 	`Cineplex`;
@@ -57,9 +57,9 @@ CREATE TABLE `Cinema` (
 
 DROP TABLE IF EXISTS `Room`;
 CREATE TABLE `Room` (
-	`room_id` 		INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-	`room_name` 	NVARCHAR(20) NOT NULL,
-	`cinema_id` 	INT UNSIGNED NOT NULL,
+	`room_id` 			INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	`room_name` 		NVARCHAR(20) NOT NULL,
+	`cinema_id` 		INT UNSIGNED NOT NULL,
 	FOREIGN KEY (`cinema_id`)	REFERENCES 	`Cinema`(`cinema_id`) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
@@ -69,9 +69,9 @@ CREATE TABLE `Movie` (
   `movie_name` 			NVARCHAR(100) NOT NULL UNIQUE,
   `movie_description` 	TEXT NOT NULL,
   `movie_trailer` 		TEXT DEFAULT NULL,
-  `movie_release` 		DATE DEFAULT NULL,
+  `movie_release` 		DATE NOT NULL,
   `movie_lenght` 		TINYINT UNSIGNED DEFAULT NULL,
-  `movie_evaluate` 		TINYINT UNSIGNED DEFAULT 6,
+  `movie_evaluate` 		TINYINT UNSIGNED DEFAULT 0,
   `movie_status` 		BOOLEAN DEFAULT 0 ,
   `movie_price`			INT UNSIGNED DEFAULT 60000
 ) ;
@@ -83,18 +83,18 @@ CREATE TABLE `Image` (
   `drive_file_id` 	VARCHAR(50),
   `img_name`		VARCHAR(200),
   `img_url` 		TEXT NOT NULL,
-  `movie_id` 		INT UNSIGNED UNIQUE,
-  `user_id` 		INT UNSIGNED UNIQUE,
-  `cineplex_id` 	TINYINT UNSIGNED UNIQUE,
-    FOREIGN KEY (`user_id`)		REFERENCES 	`User`(`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  `movie_id` 		INT UNSIGNED ,
+  `user_id` 		INT UNSIGNED ,
+  `cineplex_id` 	TINYINT UNSIGNED ,
+    FOREIGN KEY (`user_id`)			REFERENCES 	`User`(`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`movie_id`)		REFERENCES 	`Movie`(`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`cineplex_id`)		REFERENCES 	`Cineplex`(`cineplex_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 DROP TABLE IF EXISTS `Schedule`;
 CREATE TABLE `Schedule` (
-  `schedule_id` 	  INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-  `schedule_start` 	TIME NOT NULL UNIQUE
+  `schedule_id` 	  	INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  `schedule_start` 	 	TIME NOT NULL UNIQUE
 );
 
 DROP TABLE IF EXISTS `ScheduleMovie`;
@@ -104,9 +104,9 @@ CREATE TABLE `ScheduleMovie` (
   `schedule_id` 		INT UNSIGNED NOT NULL,
   `room_id` 			INT UNSIGNED NOT NULL,
   `schedule_date` 		DATE  NOT NULL,
-	FOREIGN KEY (`room_id`)		REFERENCES 	`Room`(`room_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (`movie_id`)	REFERENCES 	`Movie`(`movie_id`)  ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (`schedule_id`)	REFERENCES 	`Schedule`(`schedule_id`) ON DELETE CASCADE ON UPDATE CASCADE 
+	FOREIGN KEY (`room_id`)		REFERENCES 	`Room`(`room_id`) 			ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`movie_id`)	REFERENCES 	`Movie`(`movie_id`)  		ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`schedule_id`)	REFERENCES 	`Schedule`(`schedule_id`) 	ON DELETE CASCADE ON UPDATE CASCADE 
 ) ;
 
 DROP TABLE IF EXISTS `Seat`;
@@ -118,15 +118,17 @@ CREATE TABLE `Seat` (
 
 DROP TABLE IF EXISTS `Ticket`;
 CREATE TABLE `Ticket` (
-  `ticket_code` 		INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
+  `ticket_id` 			INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
+  `ticket_code`			VARCHAR(10) NOT NULL UNIQUE,
   `schedule_movie_id` 	INT UNSIGNED ,
   `seat_id` 			INT UNSIGNED ,
   `user_id`				INT UNSIGNED ,
-  `ticket_price`		INT UNSIGNED NOT NULL,
+  `ticket_price`		INT UNSIGNED ,
+  `status`				ENUM("PENDING","ACCEPT") DEFAULT "PENDING" NOT NULL,
   `created_date` 		DATETIME DEFAULT NOW(),
-    FOREIGN KEY (`schedule_movie_id`)	REFERENCES 	`ScheduleMovie`(`schedule_movie_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-	FOREIGN KEY (`seat_id`)		REFERENCES 	`Seat`(`seat_id`)ON DELETE SET NULL ON UPDATE CASCADE,
-	FOREIGN KEY (`user_id`)		REFERENCES 	`User`(`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (`schedule_movie_id`)	REFERENCES 	`ScheduleMovie`(`schedule_movie_id`) 	ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY (`seat_id`)				REFERENCES 	`Seat`(`seat_id`) 						ON DELETE SET NULL ON UPDATE CASCADE,
+	FOREIGN KEY (`user_id`)				REFERENCES 	`User`(`user_id`) 						ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 INSERT INTO `User` 	(`username`,			`email`,					`number_phone`,					`password`,														`first_name`,	`last_name`, 	`date_of_birth`,	`gender`, 	`address`,			`role`			,`is_active`)
@@ -5172,22 +5174,13 @@ INSERT INTO `ScheduleMovie` (`movie_id`,`schedule_id`,`room_id`,`schedule_date`)
 (11, 40, 269, '2022-08-05'),
 (8, 38, 56, '2022-08-31');
 
- INSERT INTO `Ticket` (`schedule_movie_id`,`seat_id`,`user_id`,`ticket_price`) VALUES 
- 	(71, 18, 1,60000),
- 	(71, 12, 1,60000),
- 	(71, 15, 2,60000),
- 	(71, 55, 1,90000),
- 	(71, 111, 1,60000),
- 	(71, 78, 2,90000),
- 	(71, 10, 5,60000);
-
 SELECT * FROM `User`;
 SELECT * FROM `RegistrationUserToken`;
 SELECT * FROM `ResetPasswordToken`;
 SELECT * FROM Movie;
 SELECT * FROM Room;
 SELECT * FROM Image;
-SELECT * FROM `ScheduleMovie` where movie_id = 1 ; 
+SELECT * FROM `ScheduleMovie`; 
 SELECT * FROM `Schedule`;
 SELECT * FROM `User`;
 SELECT * FROM Seat;
@@ -5195,10 +5188,10 @@ SELECT * FROM Cineplex;
 SELECT * FROM Ticket;
 SELECT * FROM Cinema;
 
-delete from movie where movie_id = 20;
-delete from Image where img_id = 27;
-delete from `user` where user_id = 1;
-delete from `ResetPasswordToken` where id = 1;
+-- update Ticket set `status` = "ACCEPT" where ticket_id = 2;
+-- delete from Image where img_id = 27;
+-- delete from `user` where user_id = 1;
+-- delete from `ResetPasswordToken` where id = 1;
 
 
 

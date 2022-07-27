@@ -53,7 +53,7 @@ public class Movie implements Serializable {
 	private short movieLength;
 
 	@Column(name = "movie_evaluate")
-	@ColumnDefault("6")
+	@ColumnDefault("0")
 	private short movieEvaluate;
 
 	@Column(name = "movie_price")

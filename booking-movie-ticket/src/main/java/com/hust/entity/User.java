@@ -2,6 +2,7 @@ package com.hust.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -67,7 +69,7 @@ public class User implements Serializable {
 
 	@Column(name = "role", nullable = false)
 	@Enumerated(EnumType.STRING)
-	private Role role;
+	private Role role = Role.CUSTOMER;
 
 	@Column(name = "created_date", insertable = false, nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -76,6 +78,9 @@ public class User implements Serializable {
 
 	@OneToOne(mappedBy = "imgOfUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Image avatar;
+
+	@OneToMany(mappedBy = "ticketsOfUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Ticket> tickets;
 
 	@Column(name = "is_active")
 	@ColumnDefault("0")

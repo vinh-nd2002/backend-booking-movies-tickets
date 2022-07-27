@@ -6,7 +6,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.hust.entity.Seat.SeatType;
+import com.hust.entity.Ticket.Status;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,22 +14,23 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class TicketDTO {
-	private int ticketCode;
+	private int ticketId;
 
-	@JsonProperty("scheduleMovie")
+	private String ticketCode;
+
+	@JsonProperty("movie")
+	@JsonUnwrapped
 	private ScheduleMovieDTO ticketsOfScheduleMovie;
 
 	@Data
 	@NoArgsConstructor
 	static class ScheduleMovieDTO extends RepresentationModel<ScheduleMovieDTO> {
-		private int scheduleMovieId;
 
 		private MovieDTO movie;
 
 		@Data
 		@NoArgsConstructor
 		static class MovieDTO extends RepresentationModel<MovieDTO> {
-			private int movieId;
 
 			private String movieName;
 
@@ -46,20 +47,8 @@ public class TicketDTO {
 		}
 	}
 
-	@JsonUnwrapped
-	@JsonProperty("seat")
-	private SeatDTO ticketsOfSeat;
-
-	@Data
-	@NoArgsConstructor
-	static class SeatDTO {
-		private SeatType seatType;
-
-		private short seatNumber;
-	}
-
 	@JsonProperty("user")
-	private UserDTO ticketsOfAccount;
+	private UserDTO ticketsOfUser;
 
 	@Data
 	@NoArgsConstructor
@@ -71,6 +60,8 @@ public class TicketDTO {
 	}
 
 	private int ticketPrice;
+
+	private Status ticketStatus;
 
 	private Date createdDate;
 }
