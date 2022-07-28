@@ -3,9 +3,6 @@ package com.hust.controller;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,14 +33,15 @@ public class UserController {
 	private ModelMapper modelMapper;
 
 	@GetMapping()
-	public ResponseEntity<?> getAllUsers(Pageable pageable) {
-		Page<User> users = userService.getAllUsers(pageable);
+	public ResponseEntity<?> getAllUsers() {
+		// get all entity
+		List<User> users = userService.getAllUsers();
 
-		List<UserDTO> dtos = modelMapper.map(users.getContent(), new TypeToken<List<UserDTO>>() {
+		// convert to dtos
+		List<UserDTO> dtos = modelMapper.map(users, new TypeToken<List<UserDTO>>() {
 		}.getType());
 
-		Page<UserDTO> dtoPages = new PageImpl<>(dtos, pageable, users.getTotalElements());
-		return new ResponseEntity<>(dtoPages, HttpStatus.OK);
+		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/{id}")

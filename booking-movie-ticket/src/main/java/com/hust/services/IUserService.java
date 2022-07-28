@@ -1,7 +1,7 @@
 package com.hust.services;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.hust.entity.User;
@@ -13,7 +13,7 @@ public interface IUserService extends UserDetailsService {
 
 	User findUserByEmail(String email);
 
-	Page<User> getAllUsers(Pageable pageable);
+	List<User> getAllUsers();
 
 	boolean isUserExistsByEmail(String email);
 

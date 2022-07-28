@@ -1,5 +1,6 @@
 package com.hust.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -7,8 +8,7 @@ import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -51,8 +51,8 @@ public class UserService implements IUserService {
 	private IResetPasswordTokenRepository resetPasswordTokenRepository;
 
 	@Override
-	public Page<User> getAllUsers(Pageable pageable) {
-		return repository.findAll(pageable);
+	public List<User> getAllUsers() {
+		return repository.findAll();
 	}
 
 	@Override
@@ -101,6 +101,7 @@ public class UserService implements IUserService {
 
 		User user = modelMapper.map(form, User.class);
 
+		
 		// encode password
 		user.setPassword((passwordEncoder.encode(user.getPassword())));
 

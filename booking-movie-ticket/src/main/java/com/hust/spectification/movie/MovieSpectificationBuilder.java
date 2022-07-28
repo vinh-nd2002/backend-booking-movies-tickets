@@ -1,7 +1,6 @@
 package com.hust.spectification.movie;
 
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.StringUtils;
 
 import com.hust.entity.Movie;
 import com.hust.form.filter.MovieFilterForm;
@@ -18,7 +17,6 @@ public class MovieSpectificationBuilder {
 		this.search = search;
 	}
 
-	@SuppressWarnings("deprecation")
 	public Specification<Movie> build() {
 
 		SearchCriteria seachCriteria = new SearchCriteria("movieName", "Like", search);
@@ -30,12 +28,12 @@ public class MovieSpectificationBuilder {
 		Specification<Movie> where = null;
 
 		// search
-		if (!StringUtils.isEmpty(search)) {
+		if (search != null) {
 			where = new MovieSpectification(seachCriteria);
 		}
 
 		// min evaluate filter
-		if (filterForm.getMinMovieEvaluate() != 0) {
+		if (filterForm != null && filterForm.getMinMovieEvaluate() != null) {
 			if (where != null) {
 				where = where.and(new MovieSpectification(minEvaluateCriteria));
 			} else {
@@ -44,7 +42,7 @@ public class MovieSpectificationBuilder {
 		}
 
 		// max evaluate filter
-		if (filterForm.getMaxMovieEvaluate() != 0) {
+		if (filterForm != null && filterForm.getMaxMovieEvaluate() != null) {
 			if (where != null) {
 				where = where.and(new MovieSpectification(maxEvaluateCriteria));
 			} else {

@@ -24,8 +24,8 @@ public class TicketDTO {
 
 	@Data
 	@NoArgsConstructor
-	static class ScheduleMovieDTO extends RepresentationModel<ScheduleMovieDTO> {
-
+	static class ScheduleMovieDTO {
+		@JsonUnwrapped
 		private MovieDTO movie;
 
 		@Data
